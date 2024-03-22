@@ -11,5 +11,5 @@ import BusinesLayer.*;
  * @author Tom
  */
 public class Test {
-    
+syestem.out.print();
 }
