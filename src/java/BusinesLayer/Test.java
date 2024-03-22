@@ -9,5 +9,6 @@ package BusinesLayer;
  * @author Tom
  */
 public class Test {
+    system.out.println("hello");
     
 }
