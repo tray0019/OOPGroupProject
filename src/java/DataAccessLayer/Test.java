@@ -4,12 +4,23 @@
  */
 package DataAccessLayer;
 
-import BusinesLayer.*;
+import java.sql.Connection;
 
 /**
- *
+ * TEST YOUR DATABASE CONNECTION IF IT WORK
  * @author Tom
  */
 public class Test {
+    
+     
+    public static void main(String[] args){
+      
+        Connection con = DBConnection.getInstance().getConnection();
+    if(con != null){
+    System.out.print("Database connection succesful!");
+        }else{
+        System.out.print("Wrong schema name!");
+      }
+    }
     
 }
