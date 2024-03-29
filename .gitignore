@@ -1,1 +1,4 @@
 /dist/
+/nbproject/private/
+
+/src/java/Controller/Test.java
