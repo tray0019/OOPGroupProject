@@ -1,10 +1,11 @@
 package Model.dto;
 
-public abstract class CredentialsDTO {
+public class CredentialsDTO {
     protected String location;
-    protected int phoneNumber;
+    protected String phoneNumber;
     protected String emailAddress;
     protected String password;
+    protected String userType;
 
     public String getLocation() {
         return location;
@@ -14,11 +15,11 @@ public abstract class CredentialsDTO {
         this.location = location;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -36,5 +37,13 @@ public abstract class CredentialsDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

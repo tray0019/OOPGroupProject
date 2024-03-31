@@ -3,11 +3,8 @@ package Model.dto;
 public class ItemDTO {
     private int itemId;
     private String itemName;
-    private String itemDescription;
-    private String itemQuantity;
-
+    private int itemQuantity;
     private String date;
-
     private float price;
 
     public int getItemId() {
@@ -26,19 +23,11 @@ public class ItemDTO {
         this.itemName = itemName;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
-    }
-
-    public String getItemQuantity() {
+    public int getItemQuantity() {
         return itemQuantity;
     }
 
-    public void setItemQuantity(String itemQuantity) {
+    public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
 
