@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataAccessLayer;
+import Model.ItemDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import Model.dto.*;
 /**
  * The CharityDAO class allows charity users to 
  * add item, select item and subscribe.

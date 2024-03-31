@@ -4,7 +4,7 @@
  */
 package DataAccessLayer;
 
-import Model.dto.*;
+import Model.ItemDTO;
 /**
  * The RetailersDAO class allows retailer users to 
  * add item, select item, update item.

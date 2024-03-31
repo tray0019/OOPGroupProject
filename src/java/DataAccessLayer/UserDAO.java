@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataAccessLayer;
+import Model.RetailersDTO;
+import Model.ConsumersDTO;
+import Model.CredentialsDTO;
+import Model.CharitableOrganizationDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import Model.dto.*;
 /**
  *
  * @author Tom

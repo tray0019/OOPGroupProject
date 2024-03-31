@@ -1,4 +1,4 @@
-package Model.dto;
+package Model;
 
 public abstract class CredentialsDTO {
     protected String location;

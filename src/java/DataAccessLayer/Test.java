@@ -4,7 +4,7 @@
  */
 package DataAccessLayer;
 
-import Model.dto.*;
+import Model.ConsumersDTO;
 import java.sql.Connection;
 
 /**

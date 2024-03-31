@@ -1,4 +1,4 @@
-package Model.dto;
+package Model;
 
 public class ConsumersDTO extends CredentialsDTO {
 

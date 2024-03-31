@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataAccessLayer;
-import Model.dto.*;
+import Model.ItemDTO;
 /**
  * The ConsumerDAO class allows consumers users to 
  * add item, select item and subscribe.

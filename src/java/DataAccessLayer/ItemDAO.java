@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package DataAccessLayer;
-import Model.dto.*;
+import Model.ItemDTO;
 /**
  *
  * @author Tom
