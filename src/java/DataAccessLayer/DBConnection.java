@@ -16,7 +16,7 @@ public class DBConnection {
     private static DBConnection instance;
     private Connection connection;
     
-    private static String serveUrl = "jdbc:mysql://localhost:3306/youll_get_error_unless_you_have_the_right_schema_name";
+    private static String serveUrl = "jdbc:mysql://localhost:3306/fwrp";
     private static String userString ="root";
     private static String passwordString = "";
     private static String driveString = "com.mysql.cj.jdbc.Driver";
