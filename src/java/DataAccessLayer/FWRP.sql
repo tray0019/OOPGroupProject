@@ -15,7 +15,7 @@ CREATE TABLE Users (
     password VARCHAR(50) NOT NULL,
     charity_name VARCHAR(50),
     retailer_name VARCHAR(50),
-    Users ENUM('retailer', 'consumer', 'charitable_org.')  NOT NULL
+    Users ENUM('retailer', 'consumer', 'charitable_org.')  NOT NULL --Users should be userType
 );
 
 -- Inventory Table
