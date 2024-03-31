@@ -1,17 +1,9 @@
 package Model.dto;
 
 public class ConsumersDTO extends CredentialsDTO {
-    private int consumerId;
+
     private String firstName;
     private String lastName;
-
-    public int getConsumerId() {
-        return consumerId;
-    }
-
-    public void setConsumerId(int consumerId) {
-        this.consumerId = consumerId;
-    }
 
     public String getFirstName() {
         return firstName;

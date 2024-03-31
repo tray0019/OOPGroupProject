@@ -3,8 +3,7 @@ package Model.dto;
 public class ItemDTO {
     private int itemId;
     private String itemName;
-    private String itemDescription;
-    private String itemQuantity;
+    private int itemQuantity; //This should be int
 
     private String date;
 
@@ -26,22 +25,6 @@ public class ItemDTO {
         this.itemName = itemName;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
-    }
-
-    public String getItemQuantity() {
-        return itemQuantity;
-    }
-
-    public void setItemQuantity(String itemQuantity) {
-        this.itemQuantity = itemQuantity;
-    }
-
     public String getDate() {
         return date;
     }
@@ -56,5 +39,19 @@ public class ItemDTO {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    /**
+     * @return the itemQuantity
+     */
+    public int getItemQuantity() {
+        return itemQuantity;
+    }
+
+    /**
+     * @param itemQuantity the itemQuantity to set
+     */
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 }

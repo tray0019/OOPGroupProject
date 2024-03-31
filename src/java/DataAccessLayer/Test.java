@@ -4,6 +4,7 @@
  */
 package DataAccessLayer;
 
+import Model.dto.*;
 import java.sql.Connection;
 
 /**
@@ -22,5 +23,13 @@ public class Test {
         System.out.print("Wrong schema name!");
       }
     }
+    
+    /**
+     * Test UserDAO
+     */
+    ConsumersDTO consumer = new ConsumersDTO();
+    
+    
+    
     
 }
