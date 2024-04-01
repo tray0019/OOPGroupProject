@@ -9,7 +9,8 @@ public class ItemDTO {
 
     private float price;
     
-    //test-VJ
+    //test-VJ-3
+    //test-VJ-4
 
     public int getItemId() {
         return itemId;
