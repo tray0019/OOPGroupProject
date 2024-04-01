@@ -4,12 +4,13 @@
  */
 package DataAccessLayer;
 import Model.dto.*;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author Tom
  */
 public interface ItemDAO {
-    void addItem(ItemDTO item, int userId);
+    void addItem(ItemDTO item, HttpSession session);
     void selectItem();
 
 }
