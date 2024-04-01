@@ -8,9 +8,6 @@ public class ItemDTO {
     private String date;
 
     private float price;
-    
-    //test-VJ-3
-    //test-VJ-4
 
     public int getItemId() {
         return itemId;
