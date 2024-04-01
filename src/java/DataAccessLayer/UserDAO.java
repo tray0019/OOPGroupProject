@@ -2,6 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package DataAccessLayer;
 import Model.RetailersDTO;
 import Model.ConsumersDTO;
@@ -10,12 +14,14 @@ import Model.CharitableOrganizationDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import java.sql.ResultSet; // added by Vaishali
 /**
  *
  * @author Tom
  */
 public class UserDAO {
-    private Connection connection;
+    private final Connection connection;
     
     public UserDAO(){
         connection = DBConnection.getInstance().getConnection();
@@ -63,5 +69,65 @@ public class UserDAO {
         }
         
     }
+    
+    //-----------------------------------------------------------------------added by Vaishali
+    
+    public CredentialsDTO authenticateUser(String email, String inputPassword) {
+        // Assuming inputPassword will be hashed within this method or prior to calling it
+        String query = "SELECT * FROM Users WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("password");
+                // Here you would hash the inputPassword and compare it with storedPassword
+                // Let's assume you have a method `hashPassword` and `checkPassword`
+                if (checkPassword(inputPassword, storedPassword)) {
+                    // Instantiate the correct subclass of CredentialsDTO based on userType
+                    String userType = resultSet.getString("userType");
+                    CredentialsDTO user = null;
+                    switch (userType) {
+                        case "consumer":
+                            user = new ConsumersDTO();
+                            // Populate user fields...
+                            break;
+                        case "retailer":
+                            user = new RetailersDTO();
+                            // Populate user fields...
+                            break;
+                        case "charitableOrg":
+                            user = new CharitableOrganizationDTO();
+                            // Populate user fields...
+                            break;
+                    }
+                    if (user != null) {
+                        // Populate common fields
+                        user.setEmailAddress(email);
+                        // Other fields as necessary
+                        return user;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Authentication failed
+    }
+
+    private boolean checkPassword(String inputPassword, String storedPassword) {
+        // Here you should hash the inputPassword and compare it with the storedPassword
+        // For now, this is a placeholder
+        // In reality, use a hashing library like BCrypt
+        return hashPassword(inputPassword).equals(storedPassword);
+    }
+
+    private String hashPassword(String password) {
+        // Placeholder for hashing - Use BCrypt or similar in practice
+        return password; // Do not use in production!
+    }
+    //-----------------------------------------------------------------------
+    
+    
     
 }
