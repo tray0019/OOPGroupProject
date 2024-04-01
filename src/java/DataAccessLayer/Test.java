@@ -66,6 +66,20 @@ public class Test {
     user.addUser(retailer);
     user.addUser(charity);
     
+    /**
+     * Testing RetailerDAO for adding item into the database
+     */
+    
+    ItemDTO item = new ItemDTO();
+    int userId = 2;
+    item.setItemName("Mango");
+    item.setItemQuantity(5);
+    item.setPrice(5);
+    
+    RetailersDAO retail = new RetailersDAO();
+    retail.addItem(item, userId);
+    
+    
     
     }
 }

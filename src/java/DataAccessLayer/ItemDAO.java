@@ -9,7 +9,7 @@ import Model.dto.*;
  * @author Tom
  */
 public interface ItemDAO {
-    void addItem(ItemDTO item);
+    void addItem(ItemDTO item, int userId);
     void selectItem();
-    void subscribe();
+
 }
