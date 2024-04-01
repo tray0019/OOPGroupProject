@@ -4,7 +4,7 @@
  */
 package DataAccessLayer;
 
-import Model.dto.*;
+import Model.ItemDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

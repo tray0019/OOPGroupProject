@@ -4,7 +4,7 @@
  */
 package DataAccessLayer;
 
-import Model.dto.*;
+import Model.*;
 import java.sql.Connection;
 
 /**
@@ -12,6 +12,10 @@ import java.sql.Connection;
  * @author Tom
  */
 public class Test {
+    
+    //test-VJ1
+    //test-VJ2
+    
     
      
     public static void main(String[] args){
@@ -22,9 +26,8 @@ public class Test {
         }else{
         System.out.print("Wrong schema name!");
       }
-    
-     /**
-     * Test UserDAO for consumer
+    /**
+     * Test UserDAO
      */
     ConsumersDTO consumer = new ConsumersDTO();
     consumer.setEmailAddress("test@test.com");
@@ -77,9 +80,13 @@ public class Test {
     item.setPrice(5);
     
     RetailersDAO retail = new RetailersDAO();
-    //retail.addItem(item, userId);
+    //.addItem(item, userId);
     
     
     
     }
+    
+    
+    
+    
 }
