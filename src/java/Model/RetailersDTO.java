@@ -1,4 +1,4 @@
-package Model.dto;
+package Model;
 
 public class RetailersDTO extends CredentialsDTO {
     private int retailerId;
