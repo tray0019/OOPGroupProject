@@ -28,7 +28,7 @@ public class UserDAO {
     }
     
     public boolean addUser(CredentialsDTO user){
-        String insertUsers = "INSERT INTO Users(email,location,phone_num,password,first_name,last_name,charity_name,retailer_name)VALUES(?,?,?,?,?,?,?,?) ";
+        String insertUsers = "INSERT INTO Users(email,address,phone_num,password,Users,first_name,last_name,charity_name,retailer_name)VALUES(?,?,?,?,?,?,?,?,?) ";
         try(PreparedStatement statement = connection.prepareStatement(insertUsers)){
             statement.setString(1, user.getEmailAddress());
             statement.setString(2, user.getLocation());
@@ -49,16 +49,16 @@ public class UserDAO {
             
             if(user instanceof CharitableOrganizationDTO){
                 CharitableOrganizationDTO charity = (CharitableOrganizationDTO) user;
-                statement.setString(6, charity.getCharitableOrgName());
+                statement.setString(8, charity.getCharitableOrgName());
             } else {
-                statement.setString(6, null);
+                statement.setString(8, null);
             }
             
             if(user instanceof RetailersDTO){
                 RetailersDTO retailer = (RetailersDTO) user;
-                statement.setString(6, retailer.getBusinessName());
+                statement.setString(9, retailer.getBusinessName());
             } else {
-                statement.setString(6, null);
+                statement.setString(9, null);
             }
             
             int rowsAffected = statement.executeUpdate();
