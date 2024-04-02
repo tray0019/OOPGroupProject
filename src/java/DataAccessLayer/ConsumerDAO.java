@@ -16,19 +16,18 @@ import javax.servlet.http.HttpSession;
  */
 public class ConsumerDAO implements ItemDAO {
     private Connection connection;
-    
     public ConsumerDAO(){
         connection = DBConnection.getInstance().getConnection();
     }
     
     @Override
-    public void addItem(ItemDTO item, HttpSession session) {
+    public void addItem(ItemDTO item, int userId) {
         
     }
 
     @Override
     public void selectItem() {
-            
+    
     }
 
     public void subscribe(int retailerId,HttpSession session) {

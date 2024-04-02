@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
  * @author Tom
  */
 public class CharityDAO implements ItemDAO{
+
     private Connection connection;
-    
     public CharityDAO(){
         this.connection = DBConnection.getInstance().getConnection();
     }
@@ -26,7 +26,7 @@ public class CharityDAO implements ItemDAO{
     * but to its own!
     */
      @Override
-    public void addItem(ItemDTO item, HttpSession session) {
+    public void addItem(ItemDTO item, int userId) {
         
     }
 

@@ -77,7 +77,7 @@ public class Test {
     item.setPrice(5);
     
     RetailersDAO retail = new RetailersDAO();
-    //retail.addItem(item, userId);
+    retail.addItem(item, userId);
     
     
     

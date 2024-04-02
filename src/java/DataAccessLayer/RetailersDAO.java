@@ -8,7 +8,6 @@ import Model.dto.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.servlet.http.HttpSession;
 /**
  * The RetailersDAO class allows retailer users to 
  * add item, select item, update item.
@@ -23,13 +22,11 @@ public class RetailersDAO implements ItemDAO{
     }
     
     @Override
-    public void addItem(ItemDTO item, HttpSession session) {
+    public void addItem(ItemDTO item, int userId) {
         String insertQuery = "INSERT INTO inventory (user_id,item_name,quantity,price)VALUES(?,?,?,?)";
         
-        int retailerId = (Integer) session.getAttribute("userId"); 
-        
         try(PreparedStatement statement = connection.prepareStatement(insertQuery)){
-            statement.setInt(1, retailerId);
+            statement.setInt(1, userId);
             statement.setString(2, item.getItemName());
             statement.setInt(3, item.getItemQuantity());
             statement.setFloat(4, item.getPrice());
@@ -43,10 +40,6 @@ public class RetailersDAO implements ItemDAO{
     @Override
     public void selectItem() {
     
-    }
-    
-    public void deleteItem(){
-        
     }
 
     
