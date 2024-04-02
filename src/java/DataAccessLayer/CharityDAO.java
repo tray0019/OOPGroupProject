@@ -7,6 +7,7 @@ import Model.ItemDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 
 /**
  * The CharityDAO class allows charity users to 
@@ -14,24 +15,19 @@ import java.sql.SQLException;
  * @author Tom
  */
 public class CharityDAO implements ItemDAO{
-
     private Connection connection;
+    
     public CharityDAO(){
         this.connection = DBConnection.getInstance().getConnection();
     }
     
+    /*
+    * This method is wrong since charity does not add item to the database 
+    * but to its own!
+    */
      @Override
-    public void addItem(ItemDTO item) {
-        String insertQuery = "INSERT INTO inventory (item_name,quantity,price)VALUES(?,?,?)";
+    public void addItem(ItemDTO item, HttpSession session) {
         
-        try(PreparedStatement statement = connection.prepareStatement(insertQuery)){
-            statement.setString(1, item.getItemName());
-            statement.setFloat(2, item.getItemId());
-            
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -39,8 +35,19 @@ public class CharityDAO implements ItemDAO{
     
     }
 
-    @Override
-    public void subscribe() {
+    public void subscribe(int retailerId, HttpSession session) {
+      int charityId = (Integer) session.getAttribute("charityId");
+      
+      String insertSubscription = "INSERT INTO Subscriptions(subscriber_id, retailer_id)VALUES(?,?)";
+      
+      try(PreparedStatement statement = connection.prepareStatement(insertSubscription)){
+          statement.setInt(1, charityId);
+          statement.setInt(2, retailerId);
+          statement.executeUpdate();
+          
+      }catch(SQLException e){
+          e.printStackTrace();
+      }
       
     }
     
