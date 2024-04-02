@@ -1,4 +1,4 @@
-package Model;
+package Model.dto;
 
 public class ItemDTO {
     private int itemId;
