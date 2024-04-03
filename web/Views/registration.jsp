@@ -16,7 +16,7 @@
 <body>
     <div class="container mt-5">
         <h2>Registration</h2>
-        <form action="RegistrationServlet" method="POST">
+        <form action="/OOPFinalProject_FWRP/RegistrationServlet" method="POST">
             <div class="form-group">
                 <label for="userType">I am a:</label>
                 <select class="form-control" id="userType" name="userType" required>

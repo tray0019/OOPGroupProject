@@ -21,7 +21,7 @@
                 <%= request.getAttribute("loginError") %>
             </div>
         <% } %>
-        <form action="LoginServlet" method="POST">
+        <form action="/OOPFinalProject_FWRP/LoginServlet" method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -32,7 +32,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <p>Don't have an account? <a href="registration.jsp">Register here</a>.</p>
+        <p>Don't have an account? <a href="Views/registration.jsp">Register here</a>.</p>
     </div>
 </body>
 </html>
