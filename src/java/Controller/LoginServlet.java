@@ -11,9 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import DataAccessLayer.UserDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import DataAccessLayer.*;
 import Model.CredentialsDTO;
+import java.sql.ResultSet;
 
 /**
  *
@@ -22,6 +25,12 @@ import Model.CredentialsDTO;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
 
+  private Connection connection;
+  
+  public LoginServlet(){
+      connection = DBConnection.getInstance().getConnection();
+  }
+  
   
 
     /**
@@ -38,12 +47,10 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password"); // This should be hashed and compared.
 
-        UserDAO userDAO = new UserDAO();
-        CredentialsDTO user = userDAO.authenticateUser(email, password);
 
-        if (user != null) {
+        if (authentication(email,password)) {
             System.out.println("Login successful for user: " + email); // Simple logging
-            request.getSession().setAttribute("user", user); // Store user in session.
+            request.getSession().setAttribute("user", email); // Store user in session.
             response.sendRedirect("Views/dashboard.jsp"); // Redirect to the dashboard.
         } else {
             System.out.println("Login failed for user: " + email); // Simple logging
@@ -51,7 +58,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("Views/login.jsp").forward(request, response);
         }
 
-    }
+    } 
 
     /**
      * Returns a short description of the servlet.
@@ -62,5 +69,27 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    /**
+     * Added for user logs-in
+     */
+    private boolean authentication(String email, String password){
+        String userPassword = "SELECT * FROM Users WHERE email = ? AND password = ?";
+        
+        try(PreparedStatement statement = connection.prepareStatement(userPassword)){
+            statement.setString(1, email);
+            statement.setString(2, password);
+            
+           try(ResultSet resultSet = statement.executeQuery()){
+              return resultSet.next(); 
+           } 
+            
+        
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
 
 }
