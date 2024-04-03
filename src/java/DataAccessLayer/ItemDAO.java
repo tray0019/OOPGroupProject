@@ -5,6 +5,8 @@
 package DataAccessLayer;
 import Model.ItemDTO;
 import javax.servlet.http.HttpSession;
+
+import java.util.List;
 /**
  *
  * @author Tom
@@ -12,5 +14,10 @@ import javax.servlet.http.HttpSession;
 public interface ItemDAO {
     void addItem(ItemDTO item, HttpSession session);
     void selectItem();
+    void deleteItem(int itemId);
+    
+// ----------------------------code added by Vaishali
+    List<ItemDTO> getAllAvailableItems();
+// ---------------------------------- 
 
 }

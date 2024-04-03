@@ -7,6 +7,7 @@ import Model.ItemDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -49,6 +50,16 @@ public class CharityDAO implements ItemDAO{
           e.printStackTrace();
       }
       
+    }
+
+    @Override
+    public void deleteItem(int itemId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ItemDTO> getAllAvailableItems() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

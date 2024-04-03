@@ -56,7 +56,7 @@ select * from inventory;
 
 
 
--- 2. MODIFIED THE DATABSE 
+-- 2. MODIFIED THE DATABSE - by Rustom 01-04-2024
 
 DROP DATABASE IF EXISTS FWRP;
 CREATE DATABASE FWRP;
@@ -118,3 +118,7 @@ DELIMITER ;
 select * from users;
 select * from subscriptions;
 select * from inventory;
+
+-- added two columns in inventory table by Vaishali
+use fwrp;
+alter table inventory add column for_consumer tinyint(1) default 0, add column for_charity tinyint(1) default 0;
