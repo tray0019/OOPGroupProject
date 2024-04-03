@@ -4,8 +4,11 @@
  */
 package Controller;
 
+import DataAccessLayer.RetailersDAO;
+import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,6 +60,11 @@ public class InventoryManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        RetailersDAO dao = new RetailersDAO();
+        List<ItemDTO> items = dao.getAllAvailableItems();
+        request.setAttribute("items", items);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        
         processRequest(request, response);
     }
 

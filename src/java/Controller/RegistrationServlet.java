@@ -17,7 +17,7 @@ import DataAccessLayer.UserDAO;
 
 /**
  *
- * @author Home
+ * @author Vaishali Jaiswal
  */
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/RegistrationServlet"})
 public class RegistrationServlet extends HttpServlet {
@@ -48,7 +48,74 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+   /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Extract common parameters
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String userType = request.getParameter("Users"); // This should be the name attribute in the select tag
+
+        UserDAO userDAO = new UserDAO();
+        boolean registrationSuccess;
+
+        // Create a DTO based on the user type
+        switch (userType) {
+            case "retailer":
+                RetailersDTO retailer = new RetailersDTO();
+                retailer.setBusinessName(request.getParameter("retailer_name"));
+                retailer.setEmailAddress(email);
+                retailer.setPassword(password);
+                retailer.setLocation(address);
+                retailer.setPhoneNumber(phone);
+                retailer.setUserType(userType);
+                registrationSuccess = userDAO.addUser(retailer);
+                break;
+            case "consumer":
+                ConsumersDTO consumer = new ConsumersDTO();
+                consumer.setFirstName(request.getParameter("first_name"));
+                consumer.setLastName(request.getParameter("last_name"));
+                consumer.setEmailAddress(email);
+                consumer.setPassword(password);
+                consumer.setLocation(address);
+                consumer.setPhoneNumber(phone);
+                consumer.setUserType(userType);
+                registrationSuccess = userDAO.addUser(consumer);
+                break;
+            case "charitable_org":
+                CharitableOrganizationDTO charity = new CharitableOrganizationDTO();
+                charity.setCharitableOrgName(request.getParameter("charity_name"));
+                charity.setEmailAddress(email);
+                charity.setPassword(password);
+                charity.setLocation(address);
+                charity.setPhoneNumber(phone);
+                charity.setUserType(userType);
+                registrationSuccess = userDAO.addUser(charity);
+                break;
+            default:
+                registrationSuccess = false;
+                request.setAttribute("errorMessage", "Invalid user type.");
+                request.getRequestDispatcher("/registration.jsp").forward(request, response);
+                return;
+        }
+
+        // Redirect or forward based on the registration success
+        if (registrationSuccess) {
+            response.sendRedirect("login.jsp"); // Redirect to login page on success
+        } else {
+            request.setAttribute("errorMessage", "Registration failed. Please try again.");
+            request.getRequestDispatcher("/registration.jsp").forward(request, response);
+        }
+    }
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -62,67 +129,7 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    // Basic server-side validation example
-    String email = request.getParameter("email");
-    String password = request.getParameter("password");
-    if(email == null || email.isEmpty() || password == null || password.isEmpty()) {
-        request.setAttribute("errorMessage", "Email and Password are required.");
-        request.getRequestDispatcher("/registration.jsp").forward(request, response);
-        return;
-    }    
-
-    String userType = request.getParameter("userType"); // Assuming you have a form field to capture this.
-    CredentialsDTO user = null;
-
-    switch (userType) {
-        case "retailer":
-            user = new RetailersDTO();
-            ((RetailersDTO)user).setBusinessName(request.getParameter("businessName"));
-            break;
-        case "consumer":
-            user = new ConsumersDTO();
-            ((ConsumersDTO)user).setFirstName(request.getParameter("firstName"));
-            ((ConsumersDTO)user).setLastName(request.getParameter("lastName"));
-            break;
-        case "charitableOrg":
-            user = new CharitableOrganizationDTO();
-            ((CharitableOrganizationDTO)user).setCharitableOrgName(request.getParameter("charitableOrgName"));
-            break;
-    }
-
-    if (user != null) {
-        user.setEmailAddress(request.getParameter("email"));
-        user.setPassword(request.getParameter("password")); // Ensure this password is hashed for security.
-        user.setLocation(request.getParameter("location"));
-        user.setPhoneNumber(request.getParameter("phoneNum"));
-        // Assume there's a method in CredentialsDTO to set userType or manage it accordingly.
-
-        UserDAO userDAO = new UserDAO();
-        boolean registrationSuccess = userDAO.addUser(user);
-
-        if (registrationSuccess) {
-            System.out.println("Registration successful for user: " + email); // Simple logging
-            response.sendRedirect("login.jsp"); // Redirect to login page on success.
-        } else {
-            System.out.println("Registration failed for user: " + email); // Simple logging
-            request.setAttribute("errorMessage", "Registration failed. Please try again.");
-            request.getRequestDispatcher("/registration.jsp").forward(request, response);
-        }
-    }
-
-    }
-
+    
     /**
      * Returns a short description of the servlet.
      *
@@ -132,5 +139,4 @@ public class RegistrationServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

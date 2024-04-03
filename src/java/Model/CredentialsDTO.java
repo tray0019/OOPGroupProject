@@ -1,11 +1,13 @@
 package Model;
 
 public abstract class CredentialsDTO {
-    protected String location;
-    private String phoneNumber; //Phone number should be string
+    
+    protected String userType;
     protected String emailAddress; 
     protected String password;
-    protected String userType;
+    protected String location;
+    private String phoneNumber; //Phone number should be string
+    
     
     public String getUserType(){
         return userType;
