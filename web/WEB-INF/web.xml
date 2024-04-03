@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet>
-        <servlet-name>Servlet_getParameterNames</servlet-name>
-        <servlet-class>sampleformpkg.Servlet_getParameterNames</servlet-class>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <servlet-class>Controller.RegistrationServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>DisplayItemsServlet</servlet-name>
-        <servlet-class>Controller.DisplayItemsServlet</servlet-class>
-    </servlet>
+    
     <servlet-mapping>
-        <servlet-name>Servlet_getParameterNames</servlet-name>
-        <url-pattern>/Servlet_getParameterNames-URL</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DisplayItemsServlet</servlet-name>
-        <url-pattern>/DisplayItemsServlet</url-pattern>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <url-pattern>/RegistrationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

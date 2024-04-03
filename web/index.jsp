@@ -88,8 +88,8 @@
             </tbody>
         </table>
         <div class="mt-3">
-            <a href="registration.jsp" class="btn btn-primary btn-spacing">Register Now</a>
-            <a href="login.jsp" class="btn btn-secondary">Login</a>
+            <a href="Views/registration.jsp" class="btn btn-primary btn-spacing">Register Now</a>
+            <a href="Views/login.jsp" class="btn btn-secondary">Login</a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

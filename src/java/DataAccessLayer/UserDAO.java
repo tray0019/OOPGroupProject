@@ -126,5 +126,8 @@ public class UserDAO {
         // Placeholder for hashing - Use BCrypt or similar in practice
         return password; // Do not use in production!
     }
-   //------------------------------------------------------------------------------------------ 
+    //-----------------------------------------------------------------------
+    
+    
+    
 }

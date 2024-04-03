@@ -11,9 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import DataAccessLayer.UserDAO;
 import Model.CredentialsDTO;
+
 
 /**
  *
@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password"); // This should be hashed and compared.
 
-        UserDAO userDAO = new UserDAO();
+        /*UserDAO userDAO = new UserDAO();
         CredentialsDTO user = userDAO.authenticateUser(email, password);
 
         if (user != null) {
@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println("Login failed for user: " + email); // Simple logging
             request.setAttribute("loginError", "Invalid email or password.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
-        }
+        }*/
 
     }
 
