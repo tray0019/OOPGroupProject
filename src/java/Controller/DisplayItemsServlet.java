@@ -4,23 +4,21 @@
  */
 package Controller;
 
-import DataAccessLayer.RetailersDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author Home
+ * Created on : Apr 3, 2024, 11:13 a.m.
+ * @author Vaishali Jaiswal
  */
-@WebServlet(name = "InventoryManagementServlet", urlPatterns = {"/InventoryManagementServlet"})
-public class InventoryManagementServlet extends HttpServlet {
+public class DisplayItemsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class InventoryManagementServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InventoryManagementServlet</title>");            
+            out.println("<title>Servlet DisplayItemsServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet InventoryManagementServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DisplayItemsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,14 +56,13 @@ public class InventoryManagementServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RetailersDAO dao = new RetailersDAO();
-        List<ItemDTO> items = dao.getAllAvailableItems();
-        request.setAttribute("items", items);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ItemDAOImpl itemDAO = new ItemDAOImpl(); // Assuming you have an implementation class
+        List<ItemDTO> items = itemDAO.getAllAvailableItems();
         
-        processRequest(request, response);
+        request.setAttribute("items", items);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
