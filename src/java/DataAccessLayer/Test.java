@@ -80,8 +80,12 @@ public class Test {
     item.setItemQuantity(5);
     item.setPrice(5);
     
-    RetailersDAO retail = new RetailersDAO();
-    //.addItem(item, userId);
+    item.setItemName("Banana");
+    item.setItemQuantity(15);
+    item.setPrice(5);
+    
+    ManualDAO retail = new ManualDAO();
+    retail.addItem(item, userId);
     
     
     

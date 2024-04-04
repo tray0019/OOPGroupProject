@@ -8,7 +8,11 @@ import Model.ItemDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
+
+import java.sql.ResultSet;
 /**
  * The RetailersDAO class allows retailer users to 
  * add item, select item, update item.
@@ -16,7 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 public class RetailersDAO implements ItemDAO{
 
-    private Connection connection;
+    private final Connection connection;
     
     public RetailersDAO(){
         connection = DBConnection.getInstance().getConnection();
@@ -49,5 +53,32 @@ public class RetailersDAO implements ItemDAO{
         
     }
 
-    
+    @Override
+    public void deleteItem(int itemId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ItemDTO> getAllAvailableItems() {
+        List<ItemDTO> items = new ArrayList<>();
+        String query = "SELECT * FROM inventory WHERE quantity > 0"; // Adjust as needed
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            
+            while (resultSet.next()) {
+                ItemDTO item = new ItemDTO();
+                item.setItemId(resultSet.getInt("inventory_id"));
+                item.setItemName(resultSet.getString("item_name"));
+                item.setItemQuantity(resultSet.getInt("quantity"));
+                item.setPrice(resultSet.getFloat("price"));
+                // Add more fields as necessary
+                items.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+        
 }
