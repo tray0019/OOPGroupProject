@@ -23,28 +23,31 @@ public class RegistrationServlet extends HttpServlet {
 
    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+UserDAO userDAO = new UserDAO();
     // Basic server-side validation example
     String email = request.getParameter("email");
     //String password = request.getParameter("password"); not use
   
 
-    String userType = request.getParameter("userType"); // Assuming you have a form field to capture this.
+    String userType = request.getParameter("Users"); // Assuming you have a form field to capture this.
+    
+    
+    
     CredentialsDTO user = null;
 
     switch (userType) {
         case "retailer":
             user = new RetailersDTO();
-            ((RetailersDTO)user).setBusinessName(request.getParameter("businessName"));
+            ((RetailersDTO)user).setBusinessName(request.getParameter("retailer_name"));
             break;
         case "consumer":
             user = new ConsumersDTO();
-            ((ConsumersDTO)user).setFirstName(request.getParameter("firstName"));
-            ((ConsumersDTO)user).setLastName(request.getParameter("lastName"));
+            ((ConsumersDTO)user).setFirstName(request.getParameter("first_name"));
+            ((ConsumersDTO)user).setLastName(request.getParameter("last_name"));
             break;
         case "charitableOrg":
             user = new CharitableOrganizationDTO();
-            ((CharitableOrganizationDTO)user).setCharitableOrgName(request.getParameter("charitableOrgName"));
+            ((CharitableOrganizationDTO)user).setCharitableOrgName(request.getParameter("charity_name"));
             break;
     }
 
@@ -59,7 +62,7 @@ public class RegistrationServlet extends HttpServlet {
         
 
         
-        UserDAO userDAO = new UserDAO();
+        
         boolean registrationSuccess = userDAO.addUser(user);
 
         if (registrationSuccess) {

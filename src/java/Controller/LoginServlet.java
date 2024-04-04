@@ -18,6 +18,7 @@ import DataAccessLayer.*;
 import Model.CredentialsDTO;
 import java.sql.ResultSet;
 
+
 /**
  *
  * @author Home
@@ -51,7 +52,7 @@ public class LoginServlet extends HttpServlet {
         if (authentication(email,password)) {
             System.out.println("Login successful for user: " + email); // Simple logging
             request.getSession().setAttribute("user", email); // Store user in session.
-            response.sendRedirect("Views/dashboard.jsp"); // Redirect to the dashboard.
+            response.sendRedirect("InventoryManagementServlet"); // Redirect to the dashboard.
         } else {
             System.out.println("Login failed for user: " + email); // Simple logging
             request.setAttribute("loginError", "Invalid email or password.");
