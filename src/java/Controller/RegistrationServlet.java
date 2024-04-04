@@ -63,7 +63,21 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
-        String userType = request.getParameter("Users"); // This should be the name attribute in the select tag
+        String userType = request.getParameter("Users"); 
+
+        // Basic validation for common fields
+        if(email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            request.setAttribute("registrationError", "Email and password cannot be empty.");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            return;
+        }
+
+        // Validate email format
+        if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            request.setAttribute("registrationError", "Invalid email format.");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            return;
+        }
 
         UserDAO userDAO = new UserDAO();
         boolean registrationSuccess;
