@@ -47,7 +47,24 @@ public class LoginServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password"); // This should be hashed and compared.
+        
+        // Basic validation
+        if(email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            request.setAttribute("loginError", "Email and password cannot be empty.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
 
+        // Additional email format validation
+        if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            request.setAttribute("loginError", "Invalid email format.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+        
+        
+        UserDAO userDAO = new UserDAO();
+        CredentialsDTO user = userDAO.authenticateUser(email, password);
 
         if (authentication(email,password)) {
             System.out.println("Login successful for user: " + email); // Simple logging
@@ -61,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 
     } 
 
-    /**
+     /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
