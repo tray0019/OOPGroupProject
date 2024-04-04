@@ -92,7 +92,7 @@ public class InventoryManagementServlet extends HttpServlet {
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ItemDTO> inventoryList = getInventoryItems();
         request.setAttribute("inventoryList", inventoryList);
-        request.getRequestDispatcher("Views/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/retailerInventoryJSP.jsp").forward(request, response);
     }
     
         private List<ItemDTO> getInventoryItems() {

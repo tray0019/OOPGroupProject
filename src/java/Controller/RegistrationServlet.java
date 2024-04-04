@@ -54,8 +54,8 @@ UserDAO userDAO = new UserDAO();
     if (user != null) {
         user.setEmailAddress(request.getParameter("email"));
         user.setPassword(request.getParameter("password")); // Ensure this password is hashed for security.
-//        //user.setLocation(request.getParameter("location"));
-//        //user.setPhoneNumber(request.getParameter("phoneNum"));
+        user.setLocation(request.getParameter("address"));
+        user.setPhoneNumber(request.getParameter("phone_num"));
         
         //added and work
         user.setUserType(userType);
