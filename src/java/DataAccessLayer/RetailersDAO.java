@@ -58,27 +58,33 @@ public class RetailersDAO implements ItemDAO{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    //------------------------added by Vaishali---------------------------------------
     @Override
-    public List<ItemDTO> getAllAvailableItems() {
-        List<ItemDTO> items = new ArrayList<>();
-        String query = "SELECT * FROM inventory WHERE quantity > 0"; // Adjust as needed
+public List<ItemDTO> getAllAvailableItems() {
+    List<ItemDTO> items = new ArrayList<>();
+    String query =  "SELECT i.item_name, i.quantity, i.price, u.retailer_name, i.for_consumer, i.for_charity " +
+                    "FROM inventory i " +
+                    "JOIN users u ON i.user_id = u.user_id"; // Adjust as needed
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery();
-            
-            while (resultSet.next()) {
-                ItemDTO item = new ItemDTO();
-                item.setItemId(resultSet.getInt("inventory_id"));
-                item.setItemName(resultSet.getString("item_name"));
-                item.setItemQuantity(resultSet.getInt("quantity"));
-                item.setPrice(resultSet.getFloat("price"));
-                // Add more fields as necessary
-                items.add(item);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return items;
-    }
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        ResultSet resultSet = statement.executeQuery();
         
+        while (resultSet.next()) {
+            ItemDTO item = new ItemDTO();
+            item.setItemName(resultSet.getString("item_name"));
+            item.setItemQuantity(resultSet.getInt("quantity"));
+            item.setPrice(resultSet.getFloat("price"));
+            item.setRetailerName(resultSet.getString("retailer_name"));
+            item.setForConsumer(resultSet.getBoolean("for_consumer"));
+            item.setForCharity(resultSet.getBoolean("for_charity"));
+            
+            // Add more fields as necessary
+            items.add(item);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return items;
+    //------------------------------------------------------------------------------------    
+}
 }

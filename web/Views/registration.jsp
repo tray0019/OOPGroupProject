@@ -42,12 +42,79 @@
                 charityFields.style.display = 'block';
             }
         }
+        
+        function validateRegistrationForm() {
+            var userType = document.getElementById('userType').value;
+            var retailerName = document.getElementById('retailerName'); // Assuming this field exists for retailers
+            var firstName = document.getElementById('firstName'); // For consumers
+            var lastName = document.getElementById('lastName'); // For consumers
+            var charityName = document.getElementById('charityName'); // Assuming this field exists for charities
+            var email = document.getElementById('email');
+            var phone = document.getElementById('phone');
+            var password = document.getElementById('password');
+            var isValid = true; // Flag to track validation status
+
+            // User type-specific validations
+            if (userType === 'retailer' && retailerName.value.trim() === '') {
+                alert("Retailer name should not be empty.");
+                isValid = false;
+            } else if (userType === 'consumer' && (firstName.value.trim() === '' || lastName.value.trim() === '')) {
+                alert("First name and Last name should not be empty for consumers.");
+                isValid = false;
+            } else if (userType === 'charitable_org.' && charityName.value.trim() === '') {
+                alert("Charitable organization name should not be empty.");
+                isValid = false;
+            }
+
+            // Common validations
+            if (!validateEmail(email.value)) {
+                alert("Email is invalid.");
+                isValid = false;
+            }
+
+            if (phone.value.trim() === '' || !/^\d{3}-\d{3}-\d{4}$/.test(phone.value)) {
+                alert("Phone number should be in the format xxx-xxx-xxxx.");
+                isValid = false;
+            }
+
+            if (!validatePassword(password.value)) {
+                isValid = false;
+            }
+
+            return isValid; // Return validation status
+        }
+
+        // Function to validate email format
+        function validateEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Function to validate password criteria
+        function validatePassword(password) {
+            if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return false;
+            }
+            if (!/[A-Z]/.test(password)) {
+                alert("Password must contain at least one uppercase letter.");
+                return false;
+            }
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                alert("Password must contain at least one special character (!@#$%^&*(),.?\":{}|<>).");
+                return false;
+            }
+            return true;
+        }
+
+// Call this function on form submit
     </script>
 </head>
 <body>
     <div class="container">
         <h2 class="text-center">Registration</h2>
-        <form action="/OOPFinalProject_FWRP/RegistrationServlet" method="POST">
+        <!<!-- Rustom: Change to my own file path -->
+        <form action="/OOPFinalProject_FWRP/RegistrationServlet" method="POST" onsubmit="return validateRegistrationForm()">
             <div class="form-group">
                 <label for="userType">I am a:</label>
                 <select id="userType" name="Users" class="form-control" onchange="updateFormFields(this.value)">
@@ -114,3 +181,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/
+           
+</body> 
+
+</<html>

@@ -14,11 +14,6 @@ import java.sql.Connection;
  */
 public class Test {
     
-    //test-VJ1
-    //test-VJ2
-    
-    
-     
     public static void main(String[] args){
       
         Connection con = DBConnection.getInstance().getConnection();
@@ -27,7 +22,8 @@ public class Test {
         }else{
         System.out.print("Wrong schema name!");
       }
-    /**
+    
+        /**
      * Test UserDAO
      */
     ConsumersDTO consumer = new ConsumersDTO();

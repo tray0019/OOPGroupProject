@@ -23,16 +23,28 @@ public class RegistrationServlet extends HttpServlet {
 
    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-UserDAO userDAO = new UserDAO();
-    // Basic server-side validation example
-    String email = request.getParameter("email");
-    //String password = request.getParameter("password"); not use
-  
+        // Extract common parameters
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String userType = request.getParameter("Users"); 
 
-    String userType = request.getParameter("Users"); // Assuming you have a form field to capture this.
-    
-    
-    
+        // Basic validation for common fields
+        if(email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            request.setAttribute("registrationError", "Email and password cannot be empty.");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            return;
+        }
+
+        // Validate email format
+        if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            request.setAttribute("registrationError", "Invalid email format.");
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            return;
+        }
+
+    UserDAO userDAO = new UserDAO();
     CredentialsDTO user = null;
 
     switch (userType) {
