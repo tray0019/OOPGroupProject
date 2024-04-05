@@ -50,7 +50,7 @@ public class RegistrationServlet extends HttpServlet {
     switch (userType) {
         case "retailer":
             user = new RetailersDTO();
-            ((RetailersDTO)user).setBusinessName(request.getParameter("retailer_name"));
+            ((RetailersDTO)user).setRetailerName(request.getParameter("retailer_name"));
             break;
         case "consumer":
             user = new ConsumersDTO();

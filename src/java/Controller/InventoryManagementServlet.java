@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import Model.ItemDTO;
 
 import DataAccessLayer.*;
@@ -88,30 +89,17 @@ public class InventoryManagementServlet extends HttpServlet {
      *  Testing for displayin inventory in the dashboard
      */
    
-     @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<ItemDTO> inventoryList = getInventoryItems();
-        request.setAttribute("items", inventoryList);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       
+        HttpSession session = request.getSession();
+        int userId = (int) session.getAttribute("userId");
+        
+        RetailersDAO dao = new RetailersDAO();
+        List<ItemDTO> items = dao.getRetailersAvailableItems(userId);
+     
+        request.setAttribute("items", items);
         request.getRequestDispatcher("Views/retailerInventory.jsp").forward(request, response);
-    }
-    
-        private List<ItemDTO> getInventoryItems() {
-        List<ItemDTO> inventoryList = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Inventory ORDER BY item_name ASC");
-
-            while (resultSet.next()) {
-                ItemDTO item = new ItemDTO();
-                item.setItemName(resultSet.getString("item_name"));
-                item.setItemQuantity(resultSet.getInt("quantity"));
-                item.setPrice(resultSet.getFloat("price"));
-                inventoryList.add(item);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return inventoryList;
     }
     
     /**
