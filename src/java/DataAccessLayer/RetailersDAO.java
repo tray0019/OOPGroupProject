@@ -25,7 +25,6 @@ public class RetailersDAO implements ItemDAO{
     public RetailersDAO(){
         connection = DBConnection.getInstance().getConnection();
     }
-    
     @Override
     public void addItem(ItemDTO item, HttpSession session) {
         String insertQuery = "INSERT INTO inventory (user_id,item_name,quantity,price)VALUES(?,?,?,?)";
@@ -85,6 +84,36 @@ public List<ItemDTO> getAllAvailableItems() {
         e.printStackTrace();
     }
     return items;
-    //------------------------------------------------------------------------------------    
+     
 }
+public List<ItemDTO> getRetailersAvailableItems(int userId){
+
+    List<ItemDTO> items = new ArrayList<>();
+    String query =  "SELECT i.item_name, i.quantity, i.price, u.retailer_name, i.for_consumer, i.for_charity " +
+                    "FROM inventory i " +
+                    "JOIN users u ON i.user_id = u.user_id " +
+                    "WHERE i.user_id = ?"; // Filter by user_id
+    
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        
+        while (resultSet.next()) {
+            ItemDTO item = new ItemDTO();
+            item.setItemName(resultSet.getString("item_name"));
+            item.setItemQuantity(resultSet.getInt("quantity"));        
+            item.setPrice(resultSet.getFloat("price"));     
+            item.setRetailerName(resultSet.getString("retailer_name"));         
+            item.setForConsumer(resultSet.getBoolean("for_consumer"));       
+            item.setForCharity(resultSet.getBoolean("for_charity"));       
+            
+            // Add more fields as necessary
+            items.add(item);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return items;
+}
+//------------------------------------------------------------------------------------   
 }

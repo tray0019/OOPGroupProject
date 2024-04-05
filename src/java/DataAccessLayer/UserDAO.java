@@ -56,7 +56,7 @@ public class UserDAO {
             
             if(user instanceof RetailersDTO){
                 RetailersDTO retailer = (RetailersDTO) user;
-                statement.setString(9, retailer.getBusinessName());
+                statement.setString(9, retailer.getRetailerName());
             } else {
                 statement.setString(9, null);
             }
@@ -85,25 +85,25 @@ public class UserDAO {
                 // Let's assume you have a method `hashPassword` and `checkPassword`
                 if (checkPassword(inputPassword, storedPassword)) {
                     // Instantiate the correct subclass of CredentialsDTO based on userType
-                    String userType = resultSet.getString("userType");
+                    String userType = resultSet.getString("Users");
+                    System.out.println("UserType: " + userType);
                     CredentialsDTO user = null;
                     switch (userType) {
                         case "consumer":
                             user = new ConsumersDTO();
-                            // Populate user fields...
                             break;
                         case "retailer":
                             user = new RetailersDTO();
-                            // Populate user fields...
                             break;
                         case "charitableOrg":
                             user = new CharitableOrganizationDTO();
-                            // Populate user fields...
                             break;
                     }
                     if (user != null) {
-                        // Populate common fields
+                        user.setUserType(userType);
                         user.setEmailAddress(email);
+                        user.setUserId(resultSet.getInt("user_id")); // Retrieve user ID
+
                         // Other fields as necessary
                         return user;
                     }

@@ -67,7 +67,7 @@
             <tbody>
                 <%
                     // You would retrieve the list of items from a method that fetches data from the database.
-                    List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("inventoryList");
+                    List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("items");
                     if(items != null) {
                         for(ItemDTO item : items) {
                 %>
@@ -98,5 +98,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+window.onload = function() {
+    document.getElementById('registrationForm').reset();
+};
+</script>
+    
 </body> 
 </html>

@@ -114,7 +114,7 @@
     <div class="container">
         <h2 class="text-center">Registration</h2>
         <!<!-- Rustom: Change to my own file path -->
-        <form action="/OOPFinalProject_FWRP/RegistrationServlet" method="POST" onsubmit="return validateRegistrationForm()">
+        <form action="/OOPFinalProject_FWRP/RegistrationServlet" method="POST" onsubmit="return validateRegistrationForm()" >
             <div class="form-group">
                 <label for="userType">I am a:</label>
                 <select id="userType" name="Users" class="form-control" onchange="updateFormFields(this.value)">
@@ -181,7 +181,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/
-           
+     
 </body> 
 
 </<html>

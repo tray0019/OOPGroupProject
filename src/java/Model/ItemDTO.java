@@ -9,6 +9,7 @@ public class ItemDTO {
     private boolean forConsumer;
     private boolean forCharity;
     private String retailerName;
+    
     //-----------------------------------------------------------
 
     private String date;
@@ -103,6 +104,6 @@ public class ItemDTO {
         this.retailerName = retailerName;
     }
     
-    
+   
     //------------------------------------------
 }

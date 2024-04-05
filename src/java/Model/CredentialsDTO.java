@@ -7,6 +7,7 @@ public abstract class CredentialsDTO {
     protected String password;
     protected String location;
     private String phoneNumber; //Phone number should be string
+    protected int userId; // Add user_id field
     
     
     public String getUserType(){
@@ -54,5 +55,13 @@ public abstract class CredentialsDTO {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
