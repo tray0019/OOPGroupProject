@@ -1,22 +1,26 @@
 <%-- 
-    Document   : dasjbpard
-    Created on : Apr 1, 2024, 10:43:12 a.m.
-    Author     : Home
+    Document   : inventoryJSP
+    Created on : Mar 22, 2024, 4:02:27 p.m.
+    Author     : Tom
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="Model.ItemDTO"%>
 
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Dashboard</title>
+    <title>Retailer Inventory</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
+    <body>
     <div class="container mt-3">
+        <!-- Logout Link -->
+        <div class="text-right mb-3">
+            <a href="LogoutServlet" class="btn btn-danger">Logout</a>
+        </div>
+        
         <h4>Available Items</h4>
         <table class="table table-bordered">
             <thead class="thead-dark">
@@ -26,9 +30,10 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Available For</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            
+            <a href="addItem.jsp" class="btn btn-primary">Add Item</a><br>
             <tbody>
                 <%
                     // You would retrieve the list of items from a method that fetches data from the database.
@@ -42,20 +47,30 @@
                     <td><%= item.getItemQuantity() %></td>
                     <td>$<%= item.getPrice() %></td>
                     <td><%= item.isForConsumer() ? "Consumers" : "Charitable Organizations" %></td> <!-- Assuming you have a method isForConsumer() -->
+                    
+                    <td>
+                <!-- Update and Delete buttons for each item -->
+                <a href="updateItem.jsp?itemId=<%= item.getItemId() %>" class="btn btn-success">Update</a>
+                <form action="deleteItemServlet" method="POST" style="display:inline;">
+                    <input type="hidden" name="itemId" value="<%= item.getItemId() %>" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    
+                </form>
+            </td>
                 </tr>
                 <%
                         }
                     } else {
                 %>
                 <tr>
-                    <td colspan="5">No items available at the moment.</td>
+                    <td colspan="6">No items available at the moment.</td>
                 </tr>
                 <%
                     }
                 %>
             </tbody>
         </table>
+            
     </div>
 </body>
 </html>
-

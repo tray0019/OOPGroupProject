@@ -23,7 +23,7 @@ public class RegistrationServlet extends HttpServlet {
 
    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Extract common parameters
+       
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String address = request.getParameter("address");
@@ -88,6 +88,9 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
 
- 
+    }
 }
