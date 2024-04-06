@@ -30,7 +30,7 @@
 <body>
     <div class="container">
         <h1 class="text-center">Food Waste Reduction Platform</h1>
-        <h2 class="text-center mb-4">Login</h2>
+        <h3 class="text-center mb-4">Login</h3>
         <% if (request.getAttribute("loginError") != null) { %>
             <div class="alert alert-danger" role="alert">
                 <%= request.getAttribute("loginError") %>

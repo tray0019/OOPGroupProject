@@ -30,6 +30,14 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <servlet-class>Controller.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/AddToCartServlet</url-pattern>
+    </servlet-mapping>
     
     <session-config>
         <session-timeout>

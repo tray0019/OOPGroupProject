@@ -4,8 +4,11 @@
  */
 package Controller;
 
+import DataAccessLayer.ConsumerDAO;
+import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Home
  */
-@WebServlet(name = "CharityDashboardServlet", urlPatterns = {"/CharityDashboardServlet"})
-public class CharityDashboardServlet extends HttpServlet {
+@WebServlet(name = "ConsumerItemsServlet", urlPatterns = {"/ConsumerItemsServlet"})
+public class ConsumerItemsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +39,10 @@ public class CharityDashboardServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CharityDashboardServlet</title>");            
+            out.println("<title>Servlet ConsumerItemsServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CharityDashboardServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConsumerItemsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +60,20 @@ public class CharityDashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        // Instantiate the DAO
+        ConsumerDAO consumerDAO = new ConsumerDAO();
+        
+        // Fetch items available for consumers
+        List<ItemDTO> itemsForConsumer = consumerDAO.getAllAvailableItemsForConsumer();
+        
+        // Debugging: Print the list size to console
+        System.out.println("Number of items fetched: " + (itemsForConsumer != null ? itemsForConsumer.size() : "null"));
+        // Set the fetched items as a request attribute for the JSP page
+        request.setAttribute("itemsForConsumer", itemsForConsumer);
+        
+        // Forward the request to the JSP page that will display the items
+        request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
     }
 
     /**

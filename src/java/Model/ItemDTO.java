@@ -2,6 +2,7 @@ package Model;
 
 public class ItemDTO {
     private int itemId;
+    //private int inventoryId; //mm-added
     private String itemName;
     private int itemQuantity; //This should be int
     
@@ -16,10 +17,19 @@ public class ItemDTO {
 
     private float price;
 
+    /*-------mm-added
+    public int getInventoryId() {
+        return inventoryId;
+    }    
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
+    }    
+    */
+    
     public int getItemId() {
         return itemId;
     }
-
+   
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }

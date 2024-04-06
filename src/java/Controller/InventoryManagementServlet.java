@@ -9,9 +9,6 @@ import java.io.PrintWriter;
 
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +18,6 @@ import javax.servlet.http.HttpSession;
 import Model.ItemDTO;
 
 import DataAccessLayer.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -33,11 +27,9 @@ import java.util.List;
  */
 @WebServlet(name = "InventoryManagementServlet", urlPatterns = {"/InventoryManagementServlet"})
 public class InventoryManagementServlet extends HttpServlet {
-
-    private Connection connection;
     
     public InventoryManagementServlet(){
-        connection = DBConnection.getInstance().getConnection();
+        DBConnection.getInstance().getConnection();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
