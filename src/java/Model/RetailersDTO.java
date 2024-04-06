@@ -1,22 +1,16 @@
 package Model;
 
 public class RetailersDTO extends CredentialsDTO {
-    private int retailerId;
-    private String businessName;
-
-    public int getRetailerId() {
-        return retailerId;
+    
+    private String retailerName;
+    
+    
+   
+    public String getRetailerName() {
+        return retailerName;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
-    }
-
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+    public void setRetailerName(String retailerName) {
+        this.retailerName= retailerName;
     }
 }

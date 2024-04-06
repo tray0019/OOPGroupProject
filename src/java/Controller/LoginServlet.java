@@ -5,18 +5,15 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import DataAccessLayer.*;
 import Model.CredentialsDTO;
-import java.sql.ResultSet;
+
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -25,14 +22,11 @@ import java.sql.ResultSet;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-
-  private Connection connection;
   
   public LoginServlet(){
-      connection = DBConnection.getInstance().getConnection();
+     
+      DBConnection.getInstance().getConnection();
   }
-  
-  
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -44,7 +38,7 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+      
         String email = request.getParameter("email");
         String password = request.getParameter("password"); // This should be hashed and compared.
         
@@ -61,53 +55,25 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-        
-        
+            
         UserDAO userDAO = new UserDAO();
         CredentialsDTO user = userDAO.authenticateUser(email, password);
 
-        if (authentication(email,password)) {
-            System.out.println("Login successful for user: " + email); // Simple logging
-            request.getSession().setAttribute("user", email); // Store user in session.
-            response.sendRedirect("InventoryManagementServlet"); // Redirect to the dashboard.
-        } else {
-            System.out.println("Login failed for user: " + email); // Simple logging
-            request.setAttribute("loginError", "Invalid email or password.");
-            request.getRequestDispatcher("Views/login.jsp").forward(request, response);
-        }
-
+        if (user != null) {
+        System.out.println("Login successful for user: " + email); // Simple logging
+        System.out.println("UserId: " + user.getUserId());
+        System.out.println("UserType: " + user.getUserType());
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", user.getUserId()); // Use the user ID from the authenticated user object     
+        session.setAttribute("userType", user.getUserType()); // Store user type in session, if your User object has this field   
+        session.setAttribute("user", user); // Store the entire user object in the session, if you want to use it later
+        response.sendRedirect("InventoryManagementServlet"); // Redirect to the dashboard.
+    } else {
+        System.out.println("Login failed for user: " + email); // Simple logging
+        request.setAttribute("loginError", "Invalid email or password.");
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+        }        
     } 
-
-     /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
     
-    /**
-     * Added for user logs-in
-     */
-    private boolean authentication(String email, String password){
-        String userPassword = "SELECT * FROM Users WHERE email = ? AND password = ?";
-        
-        try(PreparedStatement statement = connection.prepareStatement(userPassword)){
-            statement.setString(1, email);
-            statement.setString(2, password);
-            
-           try(ResultSet resultSet = statement.executeQuery()){
-              return resultSet.next(); 
-           } 
-            
-        
-        }catch(SQLException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-    
-
 }

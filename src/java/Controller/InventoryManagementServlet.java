@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import Model.ItemDTO;
 
 import DataAccessLayer.*;
@@ -88,11 +89,25 @@ public class InventoryManagementServlet extends HttpServlet {
      *  Testing for displayin inventory in the dashboard
      */
    
-     @Override
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//       
+//        HttpSession session = request.getSession();
+//        int userId = (int) session.getAttribute("userId");
+//        
+//        RetailersDAO dao = new RetailersDAO();
+//        List<ItemDTO> items = dao.getRetailersAvailableItems(userId);
+//     
+//        request.setAttribute("items", items);
+//        request.getRequestDispatcher("Views/retailerInventory.jsp").forward(request, response);
+//     
+//    }
+//        
+        @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ItemDTO> inventoryList = getInventoryItems();
         request.setAttribute("items", inventoryList);
-        request.getRequestDispatcher("Views/retailerInventoryJSP.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/retailerInventory.jsp").forward(request, response);
     }
     
         private List<ItemDTO> getInventoryItems() {
@@ -126,7 +141,7 @@ public class InventoryManagementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }
+        }
 
     /**
      * Returns a short description of the servlet.
@@ -138,6 +153,6 @@ public class InventoryManagementServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-   
+
 
 }

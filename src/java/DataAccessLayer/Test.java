@@ -55,7 +55,7 @@ public class Test {
     retailer.setPhoneNumber("613-444-6666");
     retailer.setPassword("Labla123");
     retailer.setUserType("retailer");
-    retailer.setBusinessName("Loblaws");
+    retailer.setRetailerName("Loblaws");
   
     
     /**

@@ -25,6 +25,7 @@
             margin-bottom: 15px;
         }
     </style>
+    
 </head>
 <body>
     <div class="container">
@@ -36,7 +37,7 @@
             </div>
         <% } %>
         <!<!-- Rustom: Change to my own file path! -->
-        <form action="/OOPFinalProject_FWRP/LoginServlet" method="POST"onsubmit="return validateLoginForm()">
+        <form action="/OOPFinalProject_FWRP/LoginServlet" autocomplete="off" method="POST"onsubmit="return validateLoginForm()">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -52,7 +53,7 @@
         <div class="text-center mt-4">
             <p>Don't have an account? <a href="registration.jsp">Register here</a>.</p>
         </div>
-        <p>Don't have an account? <a href="Views/registration.jsp">Register here</a>.</p>
+        
     </div>
 
     <!-- Bootstrap JS and dependencies -->
@@ -105,7 +106,6 @@
     }
 
 </script>
-
     
 </body>
 </html>

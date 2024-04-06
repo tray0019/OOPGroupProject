@@ -18,7 +18,7 @@ public class DBConnection {
     
     private static String serveUrl = "jdbc:mysql://localhost:3306/fwrp";
     private static String userString ="root";
-    private static String passwordString = "";
+    private static String passwordString = "Mysql321@mc2";
     private static String driveString = "com.mysql.cj.jdbc.Driver";
     
     private DBConnection(){
