@@ -61,14 +61,24 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null) {
         System.out.println("Login successful for user: " + email); // Simple logging
-        System.out.println("UserId: " + user.getUserId());
-        System.out.println("UserType: " + user.getUserType());
         
         HttpSession session = request.getSession();
         session.setAttribute("userId", user.getUserId()); // Use the user ID from the authenticated user object     
         session.setAttribute("userType", user.getUserType()); // Store user type in session, if your User object has this field   
         session.setAttribute("user", user); // Store the entire user object in the session, if you want to use it later
-        response.sendRedirect("InventoryManagementServlet"); // Redirect to the dashboard.
+        
+        // Redirect based on user type
+            if ("retailer".equalsIgnoreCase(user.getUserType())) {
+                response.sendRedirect("InventoryManagementServlet"); // Redirect to the retailer's dashboard
+            } else if ("consumer".equalsIgnoreCase(user.getUserType())) {
+                System.out.println("going to consumer selection conditon");
+                response.sendRedirect("ConsumerItemsServlet"); // Redirect to the consumer items page
+            } else {
+                // Handle other user types or default action
+                response.sendRedirect("index.jsp"); // Redirect to a default page or error page
+            }
+        
+        
     } else {
         System.out.println("Login failed for user: " + email); // Simple logging
         request.setAttribute("loginError", "Invalid email or password.");

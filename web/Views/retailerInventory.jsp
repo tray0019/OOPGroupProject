@@ -16,6 +16,7 @@
 </head>
     <body>
     <div class="container mt-3">
+        <h1>Welcome to the Food Waste Reduction Platform</h1>
         <!-- Logout Link -->
         <div class="text-right mb-3">
             <a href="LogoutServlet" class="btn btn-danger">Logout</a>

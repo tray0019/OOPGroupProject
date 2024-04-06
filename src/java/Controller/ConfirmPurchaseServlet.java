@@ -4,20 +4,24 @@
  */
 package Controller;
 
+import DataAccessLayer.ConsumerDAO;
+import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Home
  */
-@WebServlet(name = "ConsumerDashboardServlet", urlPatterns = {"/ConsumerDashboardServlet"})
-public class ConsumerDashboardServlet extends HttpServlet {
+@WebServlet(name = "ConfirmPurchaseServlet", urlPatterns = {"/ConfirmPurchaseServlet"})
+public class ConfirmPurchaseServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +40,10 @@ public class ConsumerDashboardServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsumerDashboardServlet</title>");            
+            out.println("<title>Servlet ConfirmPurchaseServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConsumerDashboardServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConfirmPurchaseServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,6 +61,8 @@ public class ConsumerDashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("inside doget method of confirm purchase servlet");
+        response.getWriter().println("ConfirmPurchaseServlet is working!");
         processRequest(request, response);
     }
 
@@ -71,7 +77,20 @@ public class ConsumerDashboardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("inside dopost method of confirm purchase servlet");
+        HttpSession session = request.getSession();
+        List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
+        if (cart != null && !cart.isEmpty()) {
+            ConsumerDAO consumerDAO = new ConsumerDAO();
+            consumerDAO.removeItemsFromInventory(cart);
+            session.removeAttribute("cart"); // Clear the cart after purchase
+            request.setAttribute("purchaseSuccess", "Your purchase has been confirmed!");
+            response.sendRedirect("ConsumerItemsServlet"); // Change from forwarding to redirecting
+        } else {
+            request.setAttribute("error", "Your cart is empty.");
+            request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
+        }
+        
     }
 
     /**
