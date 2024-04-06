@@ -45,7 +45,7 @@
     </div>
 
     <div class="container mt-3">
-        <form action="ConfirmPurchaseServlet" method="post">
+        <form action="../ConfirmPurchaseServlet" method="post">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>

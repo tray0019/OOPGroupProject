@@ -64,15 +64,9 @@ for (ItemDTO item : cart) {
         System.out.println("Null item detected in the cart.");
     }
 }
-
-        
         // Update cart in session
         session.setAttribute("cart", cart);
-        
-        // Debug: Print a message to make sure we're redirecting to the viewCart.jsp
-System.out.println("Redirecting to viewCart.jsp");
-
-        
+       
         // Optionally redirect to a cart view page or back to the items list
         response.sendRedirect("Views/viewCart.jsp"); 
     }
