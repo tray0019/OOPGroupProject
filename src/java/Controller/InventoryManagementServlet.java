@@ -91,7 +91,7 @@ public class InventoryManagementServlet extends HttpServlet {
      @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<ItemDTO> inventoryList = getInventoryItems();
-        request.setAttribute("inventoryList", inventoryList);
+        request.setAttribute("items", inventoryList);
         request.getRequestDispatcher("Views/retailerInventoryJSP.jsp").forward(request, response);
     }
     

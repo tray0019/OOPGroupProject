@@ -32,7 +32,7 @@
             <tbody>
                 <%
                     // You would retrieve the list of items from a method that fetches data from the database.
-                    List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("inventoryList");
+                    List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("items");
                     if(items != null) {
                         for(ItemDTO item : items) {
                 %>

@@ -68,7 +68,7 @@ public class DisplayItemsServlet extends HttpServlet {
         List<ItemDTO> items = dao.getAllAvailableItems();
                 
         //Rustom: Change to my attributes name, Before: "items"
-        request.setAttribute("inventoryList", items);
+        request.setAttribute("items", items);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
     /**
