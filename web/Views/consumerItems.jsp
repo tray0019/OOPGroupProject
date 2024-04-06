@@ -39,6 +39,19 @@
 </head>
 <body>
     <div class="container text-center">
+        
+        <% 
+            String purchaseSuccess = (String) request.getAttribute("purchaseSuccess");
+            if(purchaseSuccess != null && !purchaseSuccess.isEmpty()) {
+        %>
+        <div class="alert alert-success" role="alert">
+            <%= purchaseSuccess %>
+        </div>
+        <% 
+            }
+        %>
+
+        
         <h1>Welcome to the Food Waste Reduction Platform</h1>
         <!-- Logout Link -->
         <div class="text-right mb-3">

@@ -39,6 +39,15 @@
         <url-pattern>/AddToCartServlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>ConfirmPurchaseServlet</servlet-name>
+        <servlet-class>Controller.ConfirmPurchaseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmPurchaseServlet</servlet-name>
+        <url-pattern>/ConfirmPurchaseServlet</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

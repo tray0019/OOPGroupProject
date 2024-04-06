@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Home
  */
-@WebServlet(name = "ConsumerItemsServlet", urlPatterns = {"/ConsumerItemsServlet"})
-public class ConsumerItemsServlet extends HttpServlet {
+@WebServlet(name = "ConfirmPurchaseServlet", urlPatterns = {"/ConfirmPurchaseServlet"})
+public class ConfirmPurchaseServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class ConsumerItemsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsumerItemsServlet</title>");            
+            out.println("<title>Servlet ConfirmPurchaseServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConsumerItemsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConfirmPurchaseServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,28 +61,9 @@ public class ConsumerItemsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("inside doget consumer itmes  servlet");
-        // Check for a success message in the session
-        HttpSession session = request.getSession();
-        String purchaseSuccess = (String) session.getAttribute("purchaseSuccess");
-        if (purchaseSuccess != null) {
-            request.setAttribute("purchaseSuccess", purchaseSuccess);
-            session.removeAttribute("purchaseSuccess"); // Remove it so it's not displayed again after refresh
-        }
-        
-        // Instantiate the DAO
-        ConsumerDAO consumerDAO = new ConsumerDAO();
-        
-        // Fetch items available for consumers
-        List<ItemDTO> itemsForConsumer = consumerDAO.getAllAvailableItemsForConsumer();
-        
-        // Debugging: Print the list size to console
-        System.out.println("Number of items fetched: " + (itemsForConsumer != null ? itemsForConsumer.size() : "null"));
-        // Set the fetched items as a request attribute for the JSP page
-        request.setAttribute("itemsForConsumer", itemsForConsumer);
-        
-        // Forward the request to the JSP page that will display the items
-        request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
+        System.out.println("inside doget method of confirm purchase servlet");
+        response.getWriter().println("ConfirmPurchaseServlet is working!");
+        processRequest(request, response);
     }
 
     /**
@@ -96,7 +77,20 @@ public class ConsumerItemsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("inside dopost method of confirm purchase servlet");
+        HttpSession session = request.getSession();
+        List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
+        if (cart != null && !cart.isEmpty()) {
+            ConsumerDAO consumerDAO = new ConsumerDAO();
+            consumerDAO.removeItemsFromInventory(cart);
+            session.removeAttribute("cart"); // Clear the cart after purchase
+            request.setAttribute("purchaseSuccess", "Your purchase has been confirmed!");
+            response.sendRedirect("ConsumerItemsServlet"); // Change from forwarding to redirecting
+        } else {
+            request.setAttribute("error", "Your cart is empty.");
+            request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
+        }
+        
     }
 
     /**
