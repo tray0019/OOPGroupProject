@@ -14,11 +14,6 @@ import java.sql.Connection;
  */
 public class Test {
     
-    //test-VJ1
-    //test-VJ2
-    
-    
-     
     public static void main(String[] args){
       
         Connection con = DBConnection.getInstance().getConnection();
@@ -27,7 +22,8 @@ public class Test {
         }else{
         System.out.print("Wrong schema name!");
       }
-    /**
+    
+        /**
      * Test UserDAO
      */
     ConsumersDTO consumer = new ConsumersDTO();
@@ -59,7 +55,7 @@ public class Test {
     retailer.setPhoneNumber("613-444-6666");
     retailer.setPassword("Labla123");
     retailer.setUserType("retailer");
-    retailer.setBusinessName("Loblaws");
+    retailer.setRetailerName("Loblaws");
   
     
     /**
@@ -80,8 +76,12 @@ public class Test {
     item.setItemQuantity(5);
     item.setPrice(5);
     
-    RetailersDAO retail = new RetailersDAO();
-    //.addItem(item, userId);
+    item.setItemName("Banana");
+    item.setItemQuantity(15);
+    item.setPrice(5);
+    
+    ManualDAO retail = new ManualDAO();
+    retail.addItem(item, userId);
     
     
     

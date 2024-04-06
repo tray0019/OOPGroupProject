@@ -28,7 +28,7 @@ public class UserDAO {
     }
     
     public boolean addUser(CredentialsDTO user){
-        String insertUsers = "INSERT INTO Users(email,location,phone_num,password,first_name,last_name,charity_name,retailer_name)VALUES(?,?,?,?,?,?,?,?) ";
+        String insertUsers = "INSERT INTO Users(email,address,phone_num,password,Users,first_name,last_name,charity_name,retailer_name)VALUES(?,?,?,?,?,?,?,?,?) ";
         try(PreparedStatement statement = connection.prepareStatement(insertUsers)){
             statement.setString(1, user.getEmailAddress());
             statement.setString(2, user.getLocation());
@@ -49,16 +49,16 @@ public class UserDAO {
             
             if(user instanceof CharitableOrganizationDTO){
                 CharitableOrganizationDTO charity = (CharitableOrganizationDTO) user;
-                statement.setString(6, charity.getCharitableOrgName());
+                statement.setString(8, charity.getCharitableOrgName());
             } else {
-                statement.setString(6, null);
+                statement.setString(8, null);
             }
             
             if(user instanceof RetailersDTO){
                 RetailersDTO retailer = (RetailersDTO) user;
-                statement.setString(6, retailer.getBusinessName());
+                statement.setString(9, retailer.getRetailerName());
             } else {
-                statement.setString(6, null);
+                statement.setString(9, null);
             }
             
             int rowsAffected = statement.executeUpdate();
@@ -85,25 +85,25 @@ public class UserDAO {
                 // Let's assume you have a method `hashPassword` and `checkPassword`
                 if (checkPassword(inputPassword, storedPassword)) {
                     // Instantiate the correct subclass of CredentialsDTO based on userType
-                    String userType = resultSet.getString("userType");
+                    String userType = resultSet.getString("Users");
+                    System.out.println("UserType: " + userType);
                     CredentialsDTO user = null;
                     switch (userType) {
                         case "consumer":
                             user = new ConsumersDTO();
-                            // Populate user fields...
                             break;
                         case "retailer":
                             user = new RetailersDTO();
-                            // Populate user fields...
                             break;
                         case "charitableOrg":
                             user = new CharitableOrganizationDTO();
-                            // Populate user fields...
                             break;
                     }
                     if (user != null) {
-                        // Populate common fields
+                        user.setUserType(userType);
                         user.setEmailAddress(email);
+                        user.setUserId(resultSet.getInt("user_id")); // Retrieve user ID
+
                         // Other fields as necessary
                         return user;
                     }
@@ -126,8 +126,5 @@ public class UserDAO {
         // Placeholder for hashing - Use BCrypt or similar in practice
         return password; // Do not use in production!
     }
-    //-----------------------------------------------------------------------
-    
-    
-    
+   //------------------------------------------------------------------------------------------ 
 }
