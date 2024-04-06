@@ -63,7 +63,8 @@ public List<ItemDTO> getAllAvailableItems() {
     List<ItemDTO> items = new ArrayList<>();
     String query =  "SELECT i.item_name, i.quantity, i.price, u.retailer_name, i.for_consumer, i.for_charity " +
                     "FROM inventory i " +
-                    "JOIN users u ON i.user_id = u.user_id"; // Adjust as needed
+                    "JOIN users u ON i.user_id = u.user_id " +
+                    "WHERE i.quantity > 0 " ;
 
     try (PreparedStatement statement = connection.prepareStatement(query)) {
         ResultSet resultSet = statement.executeQuery();
