@@ -53,7 +53,7 @@ public class Test {
     retailer.setEmailAddress("loblaws@test.com");
     retailer.setLocation("100 McArthur Ave., Ottawa, ON K1L 8H5");
     retailer.setPhoneNumber("613-444-6666");
-    retailer.setPassword("Labla123");
+    retailer.setPassword("Password123");
     retailer.setUserType("retailer");
     retailer.setRetailerName("Loblaws");
   

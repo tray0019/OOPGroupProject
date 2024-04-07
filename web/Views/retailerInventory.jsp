@@ -16,9 +16,10 @@
 </head>
     <body>
     <div class="container mt-3">
+        <h1>Retail - Food Waste Reduction Platform</h1>
         <!-- Logout Link -->
         <div class="text-right mb-3">
-            <a href="LogoutServlet" class="btn btn-danger">Logout</a>
+            <a href="/OOPFinalProject_FWRP/LogoutServlet" class="btn btn-danger">Logout</a>
         </div>
         
         <h4>Available Items</h4>

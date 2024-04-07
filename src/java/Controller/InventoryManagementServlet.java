@@ -5,26 +5,23 @@
 package Controller;
 
 
-import java.io.PrintWriter;
-
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import Model.ItemDTO;
 
 import DataAccessLayer.*;
+import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
 import java.util.List;
+
 
 
 /**
@@ -33,7 +30,6 @@ import java.util.List;
  */
 @WebServlet(name = "InventoryManagementServlet", urlPatterns = {"/InventoryManagementServlet"})
 public class InventoryManagementServlet extends HttpServlet {
-
     private Connection connection;
     
     public InventoryManagementServlet(){
@@ -114,13 +110,17 @@ public class InventoryManagementServlet extends HttpServlet {
         List<ItemDTO> inventoryList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Inventory ORDER BY item_name ASC");
+            ResultSet resultSet = statement.executeQuery("SELECT i.item_name, i.quantity, i.price, u.retailer_name " +
+                   "FROM Inventory i " +
+                   "JOIN Users u ON i.user_id = u.user_id AND u.Users = 'retailer' " +
+                   "WHERE i.for_consumer = 1 AND i.quantity > 0");
 
             while (resultSet.next()) {
                 ItemDTO item = new ItemDTO();
                 item.setItemName(resultSet.getString("item_name"));
                 item.setItemQuantity(resultSet.getInt("quantity"));
                 item.setPrice(resultSet.getFloat("price"));
+                item.setRetailerName(resultSet.getString("retailer_name")); 
                 inventoryList.add(item);
             }
         } catch (SQLException e) {
