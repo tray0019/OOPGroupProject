@@ -22,7 +22,7 @@ public class Test {
         }else{
         System.out.print("Wrong schema name!");
       }
-    
+   
         /**
      * Test UserDAO
      */

@@ -11,20 +11,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import java.sql.DriverManager;
 
 import java.sql.ResultSet;
 /**
  * The RetailersDAO class allows retailer users to 
  * add item, select item, update item.
  * @author Tom
+ * @author Modified by Yandom youmbi Farock 
  */
 public class RetailersDAO implements ItemDAO{
 
-    private final Connection connection;
+        private Connection connection;
     
     public RetailersDAO(){
         connection = DBConnection.getInstance().getConnection();
     }
+    
+    
     @Override
     public void addItem(ItemDTO item, HttpSession session) {
         String insertQuery = "INSERT INTO inventory (user_id,item_name,quantity,price)VALUES(?,?,?,?)";
