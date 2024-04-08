@@ -46,7 +46,6 @@ public class RetailersDAO implements ItemDAO{
             e.printStackTrace();
         }
     }
-
     @Override
     public void selectItem() {
     
