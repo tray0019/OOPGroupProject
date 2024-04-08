@@ -34,7 +34,8 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <a href="addItem.jsp" class="btn btn-primary">Add Item</a><br>
+            <a href="Views/addItem.jsp" class="btn btn-primary">Add Item</a>
+
             <tbody>
                 <%
                     // You would retrieve the list of items from a method that fetches data from the database.

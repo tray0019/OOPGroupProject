@@ -46,6 +46,26 @@ public class RetailersDAO implements ItemDAO{
             e.printStackTrace();
         }
     }
+    
+public void addItemGood(ItemDTO item, int retailerId, int forConsumer, int forCharity) {
+    String insertQuery = "INSERT INTO inventory (user_id, item_name, quantity, price, for_consumer, for_charity) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    try (PreparedStatement statement = connection.prepareStatement(insertQuery)) {
+        statement.setInt(1, retailerId);
+        statement.setString(2, item.getItemName());
+        statement.setInt(3, item.getItemQuantity());
+        statement.setFloat(4, item.getPrice());
+        statement.setInt(5, forConsumer);
+        statement.setInt(6, forCharity);
+        
+        statement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+    
+    
     @Override
     public void selectItem() {
     
