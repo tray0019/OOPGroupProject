@@ -47,6 +47,10 @@
         <servlet-name>ConfirmPurchaseServlet</servlet-name>
         <url-pattern>/ConfirmPurchaseServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubscriptionServlet</servlet-name>
+        <url-pattern>/SubscriptionServlet</url-pattern>
+    </servlet-mapping>
     
     <session-config>
         <session-timeout>

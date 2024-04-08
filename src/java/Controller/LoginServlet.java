@@ -62,17 +62,18 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
         System.out.println("Login successful for user: " + email); // Simple logging
         
-        HttpSession session = request.getSession();
-        session.setAttribute("userId", user.getUserId()); // Use the user ID from the authenticated user object     
-        session.setAttribute("userType", user.getUserType()); // Store user type in session, if your User object has this field   
-        session.setAttribute("user", user); // Store the entire user object in the session, if you want to use it later
-        
+  System.out.println("Setting userId in session: " + user.getUserId());
+//        session.setAttribute("user_id", user.getUserId()); // Use the user ID from the authenticated user object     
+//        session.setAttribute("userType", user.getUserType()); // Store user type in session, if your User object has this field   
+//        session.setAttribute("users", user); // Store the entire user object in the session, if you want to use it later
+//        
         // Redirect based on user type
             if ("retailer".equalsIgnoreCase(user.getUserType())) {
                 response.sendRedirect("InventoryManagementServlet"); // Redirect to the retailer's dashboard
             } else if ("consumer".equalsIgnoreCase(user.getUserType())) {
-                System.out.println("going to consumer selection conditon");
-                response.sendRedirect("ConsumerItemsServlet"); // Redirect to the consumer items page
+               HttpSession session = request.getSession();
+                session.setAttribute("user_id", user.getUserId());  // Assuming 'getUserId()' correctly retrieves the user's ID
+                response.sendRedirect("ConsumerItemsServlet");
             } else {
                 // Handle other user types or default action
                 response.sendRedirect("Views/index.jsp"); // Redirect to a default page or error page

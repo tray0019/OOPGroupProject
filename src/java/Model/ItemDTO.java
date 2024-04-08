@@ -20,7 +20,7 @@ public class ItemDTO {
     /**
      * Rustom: Added for inventory
      */
-    private double RetailerId;
+    private int RetailerId;
 
     /*-------mm-added
     public int getInventoryId() {
@@ -125,14 +125,16 @@ public class ItemDTO {
     /**
      * @return the RetailerId
      */
-    public double getRetailerId() {
+    public int getRetailerId() {
         return RetailerId;
     }
 
     /**
      * @param RetailerId the RetailerId to set
      */
-    public void setRetailerId(double RetailerId) {
+    public void setRetailerId(int RetailerId) {
         this.RetailerId = RetailerId;
     }
+
+   
 }
