@@ -52,12 +52,13 @@
                     
                     <td>
                 <!-- Update and Delete buttons for each item -->
-                <a href="updateItem.jsp?itemId=<%= item.getItemId() %>" class="btn btn-success">Update</a>
-                <form action="deleteItemServlet" method="POST" style="display:inline;">
-                    <input type="hidden" name="itemId" value="<%= item.getItemId() %>" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    
+<!--                <a href="updateItem.jsp?" class="btn btn-success">Update</a>-->
+                
+                <form action="DeleteItemServlet" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="itemId" value="<%= item.getItemName() %>" />
+                <button type="submit" class="btn btn-danger">Delete</button>    
                 </form>
+
             </td>
                 </tr>
                 <%
