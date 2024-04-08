@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 
 
 /**
@@ -106,8 +108,18 @@ public class AddItemServlet extends HttpServlet {
     RetailersDAO retailersDAO = new RetailersDAO();
     retailersDAO.addItemGood(newItem, retailerId, forConsumer, forCharity);
     
+        // After adding the item, retrieve the updated list of items from the database
+    List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId); // Assuming you have a method to retrieve all items
+
+    // Set the updated list of items as an attribute in the request or session
+    request.setAttribute("items", itemList); // You can also use session.setAttribute() if needed
+
+    // Redirect to the retailer inventory JSP page
+    RequestDispatcher dispatcher = request.getRequestDispatcher("Views/retailerInventory.jsp");
+    dispatcher.forward(request, response);
+    
     // Redirect to inventory page after adding item
-    response.sendRedirect("inventory.jsp");
+    //response.sendRedirect("Views/Inventory.jsp");
 }
 
     /**

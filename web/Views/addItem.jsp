@@ -15,6 +15,7 @@
 <body>
     <div class="container mt-3">
         <h1>Add New Item</h1>
+        
         <form action="/OOPFinalProject_FWRP/AddItemServlet" method="post">
             <div class="form-group">
                 <label for="itemName">Item Name</label>
@@ -36,7 +37,10 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Add Item</button>
-        </form>
+        </form><br>
+        
+            <a href="javascript:history.go(-1);" class="btn btn-secondary">Cancel</a>
+
     </div>
 </body>
 </html>
