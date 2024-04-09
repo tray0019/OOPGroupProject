@@ -4,10 +4,12 @@
  */
 package Controller;
 
+import DataAccessLayer.CharityDAO;
 import DataAccessLayer.ConsumerDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +20,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Vaishali
+ * @author Home
  */
-@WebServlet(name = "ConsumerItemsServlet", urlPatterns = {"/ConsumerItemsServlet"})
-public class ConsumerItemsServlet extends HttpServlet {
+@WebServlet(name = "AddToCharityCartServlet", urlPatterns = {"/AddToCharityCartServlet"})
+public class AddToCharityCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class ConsumerItemsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsumerItemsServlet</title>");            
+            out.println("<title>Servlet AddToCharityCartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConsumerItemsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddToCharityCartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,28 +63,7 @@ public class ConsumerItemsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("inside doget consumer itmes  servlet");
-        // Check for a success message in the session
-        HttpSession session = request.getSession();
-        String purchaseSuccess = (String) session.getAttribute("purchaseSuccess");
-        if (purchaseSuccess != null) {
-            request.setAttribute("purchaseSuccess", purchaseSuccess);
-            session.removeAttribute("purchaseSuccess"); // Remove it so it's not displayed again after refresh
-        }
-        
-        // Instantiate the DAO
-        ConsumerDAO consumerDAO = new ConsumerDAO();
-        
-        // Fetch items available for consumers
-        List<ItemDTO> itemsForConsumer = consumerDAO.getAllAvailableItemsForConsumer();
-        
-        // Debugging: Print the list size to console
-        System.out.println("Number of items fetched: " + (itemsForConsumer != null ? itemsForConsumer.size() : "null"));
-        // Set the fetched items as a request attribute for the JSP page
-        request.setAttribute("itemsForConsumer", itemsForConsumer);
-        
-        // Forward the request to the JSP page that will display the items
-        request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -94,10 +75,51 @@ public class ConsumerItemsServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {              
+        
+        // Get selected item IDs from the request                
+        String[] selectedItemIds = request.getParameterValues("itemId");
+        
+        // Check if at least one item is selected
+        if (selectedItemIds == null || selectedItemIds.length == 0) {
+            // Redirect back to consumerItems.jsp with an error message or notification
+            request.setAttribute("errorMessage", "Please select at least one item to add to the cart.");
+            request.getRequestDispatcher("/charityItems.jsp").forward(request, response);
+            return;
+        }
+        
+        HttpSession session = request.getSession();
+        List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }        
+        
+        CharityDAO charityDAO = new CharityDAO();
+        
+        // Add selected items to the cart
+        for (String itemIdString : selectedItemIds) {
+            int itemId = Integer.parseInt(itemIdString);
+            ItemDTO item = charityDAO.getItemById(itemId); 
+            cart.add(item);
+        }
+        
+        // After adding items to the cart
+System.out.println("Cart size: " + cart.size());
+for (ItemDTO item : cart) {
+    if(item != null) {
+        System.out.println("Item added to cart: " + item.getItemName());
+    } else {
+        System.out.println("Null item detected in the cart.");
     }
+}
+        // Update cart in session
+        session.setAttribute("cart", cart);
+       
+        // Optionally redirect to a cart view page or back to the items list
+        response.sendRedirect("Views/viewCharityCart.jsp"); 
+    }
+
 
     /**
      * Returns a short description of the servlet.

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : consumerItems.jsp
-    Created on : April 05, 2024, 3:35 p.m.
-    Author     : Vaishali Jaiswal
+    Document   : charityItems
+    Created on : Apr 6, 2024, 10:43:21 p.m.
+    Author     : Vaishali
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Items Available for Purchase</title>
+    <title>Items Available for Donation</title>
     <!-- Bootstrap CSS for styling -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -41,23 +41,22 @@
     <div class="container text-center">
         
         <% 
-            String purchaseSuccess = (String) request.getAttribute("purchaseSuccess");
-            if(purchaseSuccess != null && !purchaseSuccess.isEmpty()) {
+            String claimSuccess = (String) request.getAttribute("claimSuccess");
+            if(claimSuccess != null && !claimSuccess.isEmpty()) {
         %>
         <div class="alert alert-success" role="alert">
-            <%= purchaseSuccess %>
+            <%= claimSuccess %>
         </div>
         <% 
             }
         %>
-
         
-        <h1>Welcome to the Food Waste Reduction Platform</h1>
+        <h1>Welcome to the Food Waste Reduction Platform - Charities</h1>
         <!-- Logout Link -->
         <div class="text-right mb-3">
             <a href="LogoutServlet" class="btn btn-danger">Logout</a>
         </div>
-        <h3>Items Available for Purchase</h3>
+        <h3>Items Available for Donation</h3>
         
         <% 
             String errorMessage = (String) request.getAttribute("error");
@@ -72,26 +71,25 @@
     </div>
     
     <div class="container mt-3">
-        <form action="AddToCartServlet" method="post" onsubmit="return validateForm()">
+        <form action="AddToCharityCartServlet" method="post" onsubmit="return validateForm()">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>
                         <th>Item Name</th>
                         <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Add to Cart</th>
+                        <th>Claim for Donation</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% 
-                    List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("itemsForConsumer");
+                    List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("itemsForCharity");
                     if(items != null && !items.isEmpty()) {
+                    System.out.println("item DTO has item for charity");
                         for (ItemDTO item : items) {
                     %>
                         <tr>
                             <td><%= item.getItemName() %></td>
                             <td><%= item.getItemQuantity() %></td>
-                            <td>$<%= item.getPrice() %></td>
                             <td>
                                 <input type="checkbox" name="itemId" value="<%= item.getItemId() %>">
                             </td>
@@ -101,7 +99,7 @@
                     } else { 
                     %>
                         <tr>
-                            <td colspan="4" class="text-center">No items available for purchase.</td>
+                            <td colspan="4" class="text-center">No items available for donation.</td>
                         </tr>
                     <% 
                     }
@@ -116,9 +114,10 @@
     
     <script>
         function validateForm() {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');                     
+            
             if (checkboxes.length === 0) {
-                alert('Please select at least one item to add to your cart.');
+                alert('Please select at least one item to claim for donation.');
                 return false;
             }
             return true;

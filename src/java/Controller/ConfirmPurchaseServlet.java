@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Home
+ * @author Vaishali
  */
 @WebServlet(name = "ConfirmPurchaseServlet", urlPatterns = {"/ConfirmPurchaseServlet"})
 public class ConfirmPurchaseServlet extends HttpServlet {
@@ -80,6 +80,7 @@ public class ConfirmPurchaseServlet extends HttpServlet {
         System.out.println("inside dopost method of confirm purchase servlet");
         HttpSession session = request.getSession();
         List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
+        
         if (cart != null && !cart.isEmpty()) {
             ConsumerDAO consumerDAO = new ConsumerDAO();
             consumerDAO.removeItemsFromInventory(cart);

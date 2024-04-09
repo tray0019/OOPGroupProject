@@ -1,6 +1,6 @@
 <%-- 
     Document   : viewCart
-    Created on : Apr 5, 2024, 6:12:32 p.m.
+    Created on : Apr 9, 2024, 6:12:32 p.m.
     Author     : Vaishali
 --%>
 
@@ -49,13 +49,12 @@
     </div>
 
     <div class="container mt-3">
-        <form action="../ConfirmPurchaseServlet" method="post">
+        <form action="../ClaimItemServlet" method="post">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>
                         <th>Item Name</th>
                         <th>Quantity</th>
-                        <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +67,6 @@
                                 <tr>
                                     <td><%= item.getItemName() %></td>
                                     <td><%= item.getItemQuantity() %></td>
-                                    <td>$<%= item.getPrice() %></td>
                                 </tr>
                     <% 
                             } // end if
@@ -85,7 +83,7 @@
             </table>
             <div class="text-center">
                 <% if (cart != null && !cart.isEmpty()) { %>
-                    <button type="submit" class="btn btn-success btn-spacing">Confirm Purchase</button>
+                    <button type="submit" class="btn btn-success btn-spacing">Confirm Claim</button>
                 <% } %>
             </div>
         </form>

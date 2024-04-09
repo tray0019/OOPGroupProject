@@ -48,6 +48,24 @@
         <url-pattern>/ConfirmPurchaseServlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>ClaimItemServlet</servlet-name>
+        <servlet-class>Controller.ClaimItemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClaimItemServlet</servlet-name>
+        <url-pattern>/ClaimItemServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AddToCharityCartServlet</servlet-name>
+        <servlet-class>Controller.AddToCharityCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCharityCartServlet</servlet-name>
+        <url-pattern>/AddToCharityCartServlet</url-pattern>
+    </servlet-mapping>
+        
     <session-config>
         <session-timeout>
             30
