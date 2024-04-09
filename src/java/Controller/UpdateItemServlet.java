@@ -8,23 +8,21 @@ import DataAccessLayer.RetailersDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
-
 
 /**
  *
  * @author natan
  */
-@WebServlet(name = "AddItemServlet", urlPatterns = {"/AddItemServlet"})
-public class AddItemServlet extends HttpServlet {
+@WebServlet(name = "UpdateItemServlet", urlPatterns = {"/UpdateItemServlet"})
+public class UpdateItemServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +41,10 @@ public class AddItemServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddItemServlet</title>");            
+            out.println("<title>Servlet UpdateItemServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddItemServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateItemServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,11 +59,21 @@ public class AddItemServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    // Retrieve the item name from the request parameter
+    String itemName = request.getParameter("itemName");
+
+    // Retrieve the item from the database based on the item name
+    RetailersDAO retailersDAO = new RetailersDAO();
+    ItemDTO item = retailersDAO.getItemByName(itemName);
+
+    // Pass the retrieved item to the update item JSP page
+    request.setAttribute("item", item);
+    RequestDispatcher dispatcher = request.getRequestDispatcher("Views/updateItem.jsp");
+    dispatcher.forward(request, response);
+}
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -75,22 +83,15 @@ public class AddItemServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //processRequest(request, response);
- // Retrieve item data from the form
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    // Retrieve updated item details from the form
     String itemName = request.getParameter("itemName");
     int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
     float price = Float.parseFloat(request.getParameter("price"));
-    String availableFor = request.getParameter("availability"); // Assuming this is the name of the field in your form
-    
-    // Create an ItemDTO object
-    ItemDTO newItem = new ItemDTO();
-    newItem.setItemName(itemName);
-    newItem.setItemQuantity(itemQuantity);
-    newItem.setPrice(price);
-    
+    String availableFor = request.getParameter("availability");
+
     // Determine the values for 'for_consumer' and 'for_charity' based on the selected option
     int forConsumer = 0;
     int forCharity = 0;
@@ -99,25 +100,21 @@ public class AddItemServlet extends HttpServlet {
     } else if (availableFor.equals("charitable")) {
         forCharity = 1;
     }
-    
-    // Obtain the session to get userId
-    HttpSession session = request.getSession();
-    int retailerId = (int) session.getAttribute("userId");
-    
-    // Insert the item using RetailersDAO
+
+    // Create a new ItemDTO object with the updated details
+    ItemDTO updatedItem = new ItemDTO();
+    updatedItem.setItemName(itemName);
+    updatedItem.setItemQuantity(itemQuantity);
+    updatedItem.setPrice(price);
+    updatedItem.setForConsumer(forConsumer == 1);
+    updatedItem.setForCharity(forCharity == 1);
+
+    // Update the item in the database
     RetailersDAO retailersDAO = new RetailersDAO();
-    retailersDAO.addItemGood(newItem, retailerId, forConsumer, forCharity);
-    
-        // After adding the item, retrieve the updated list of items from the database
-    List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId); 
+    retailersDAO.updateItem(updatedItem);
 
-    // Set the updated list of items as an attribute in the request or session
-    request.setAttribute("items", itemList); 
-
-    // Redirect to the retailer inventory JSP page
-    RequestDispatcher dispatcher = request.getRequestDispatcher("Views/retailerInventory.jsp");
-    dispatcher.forward(request, response);
-
+    // Redirect the user back to the inventory page
+    response.sendRedirect("Views/addItem.jsp");
 }
 
     /**

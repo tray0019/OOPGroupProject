@@ -82,14 +82,12 @@ public class DeleteItemServlet extends HttpServlet {
         String itemIdStr = request.getParameter("itemId");
         
             try {
-                // Parse the item ID into an integer
-                //int itemId = Integer.parseInt(itemIdStr);
 
                 // Delete the item from the database
                 RetailersDAO retailersDAO = new RetailersDAO();
                 retailersDAO.deleteItemGood(itemIdStr);
                 
-                        // Retrieve the updated list of items from the database
+                // Retrieve the updated list of items from the database
         HttpSession session = request.getSession();
         int retailerId = (int) session.getAttribute("userId");
         List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId);
