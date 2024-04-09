@@ -73,6 +73,9 @@ public class LoginServlet extends HttpServlet {
             } else if ("consumer".equalsIgnoreCase(user.getUserType())) {
                 System.out.println("going to consumer selection conditon");
                 response.sendRedirect("ConsumerItemsServlet"); // Redirect to the consumer items page
+            } else if ("charitable_org.".equalsIgnoreCase(user.getUserType())){ 
+                System.out.println("inside charity user on login servlet");
+                response.sendRedirect("CharityItemsServlet"); // redirect to the charity items page
             } else {
                 // Handle other user types or default action
                 response.sendRedirect("index.jsp"); // Redirect to a default page or error page

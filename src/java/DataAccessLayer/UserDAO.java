@@ -95,7 +95,7 @@ public class UserDAO {
                         case "retailer":
                             user = new RetailersDTO();
                             break;
-                        case "charitableOrg":
+                        case "charitable_org.":
                             user = new CharitableOrganizationDTO();
                             break;
                     }
