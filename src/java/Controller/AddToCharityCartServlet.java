@@ -5,7 +5,6 @@
 package Controller;
 
 import DataAccessLayer.CharityDAO;
-import DataAccessLayer.ConsumerDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author Home
+ * Create April 8, 2024 8:51pm
+ * @author Vaishali 
  */
 @WebServlet(name = "AddToCharityCartServlet", urlPatterns = {"/AddToCharityCartServlet"})
 public class AddToCharityCartServlet extends HttpServlet {
@@ -119,16 +118,4 @@ for (ItemDTO item : cart) {
         // Optionally redirect to a cart view page or back to the items list
         response.sendRedirect("Views/viewCharityCart.jsp"); 
     }
-
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

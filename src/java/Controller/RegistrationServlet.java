@@ -5,9 +5,7 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +14,15 @@ import Model.*;
 import DataAccessLayer.UserDAO;
 
 /**
- * worked
+ * Servlet implementation class RegistrationServlet
+ * This servlet handles user registration.
+ * Created April 3, 2024 3:51pm
  * @author Home
  */
 public class RegistrationServlet extends HttpServlet {
 
    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        
         String email = request.getParameter("email");

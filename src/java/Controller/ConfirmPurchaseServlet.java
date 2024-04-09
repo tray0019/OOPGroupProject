@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Servlet implementation class ConfirmPurchaseServlet
+ * This servlet handles confirming purchases made by users.
  *
  * @author Home
  */
@@ -61,9 +63,6 @@ public class ConfirmPurchaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("inside doget method of confirm purchase servlet");
-        response.getWriter().println("ConfirmPurchaseServlet is working!");
-        processRequest(request, response);
     }
 
     /**
@@ -85,22 +84,11 @@ public class ConfirmPurchaseServlet extends HttpServlet {
             consumerDAO.removeItemsFromInventory(cart);
             session.removeAttribute("cart"); // Clear the cart after purchase
             request.setAttribute("purchaseSuccess", "Your purchase has been confirmed!");
-            response.sendRedirect("ConsumerItemsServlet"); // Change from forwarding to redirecting
+            response.sendRedirect("/OOPFinalProject_FWRP/ConsumerItemsServlet"); // Change from forwarding to redirecting
         } else {
             request.setAttribute("error", "Your cart is empty.");
             request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
         }
         
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -77,7 +77,7 @@
         </div>
 
         <div class="container mt-3">
-            <form action="AddToCartServlet" method="post" onsubmit="return validateForm()">
+            <form action="/OOPFinalProject_FWRP/AddToCartServlet" method="post" onsubmit="return validateForm()">
                 <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>

@@ -8,7 +8,6 @@ import DataAccessLayer.CharityDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author Home
+ * Servlet implementation class CharityItemsServlet
+ * This servlet handles requests related to fetching items available for charities.
+ * Created April 7, 2024 6:51pm
+ * @author Vaishali
  */
 @WebServlet(name = "CharityItemsServlet", urlPatterns = {"/CharityItemsServlet"})
 public class CharityItemsServlet extends HttpServlet {
@@ -89,14 +90,4 @@ public class CharityItemsServlet extends HttpServlet {
         request.getRequestDispatcher("Views/charityItems.jsp").forward(request, response);     
         
     }
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
