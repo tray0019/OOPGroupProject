@@ -15,10 +15,12 @@ import Model.CredentialsDTO;
 
 import javax.servlet.http.HttpSession;
 
-
 /**
- *
- * @author Home
+ * This servlet handles user login functionality. It processes POST requests, validates user credentials, and 
+ * redirects users based on their role.
+ * 
+ * Created April 3, 2024 3:51pm
+ * @author Vaishali 
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -29,12 +31,14 @@ public class LoginServlet extends HttpServlet {
   }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP POST method. It processes login requests by validating the credentials provided by the user.
+     * If the credentials are valid, it redirects the user to the appropriate page based on their role.
+     * If the credentials are invalid, it redirects back to the login page with an error message.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request  The HttpServletRequest object that contains the request the client made of the servlet.
+     * @param response The HttpServletResponse object that contains the response the servlet sends to the client.
+     * @throws ServletException If a servlet-specific error occurs.
+     * @throws IOException      If an I/O error occurs during the processing of the request.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Servlet implementation class ConfirmPurchaseServlet
+ * This servlet handles confirming purchases made by users.
  *
  * @author Vaishali
  */
@@ -61,9 +63,6 @@ public class ConfirmPurchaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("inside doget method of confirm purchase servlet");
-        response.getWriter().println("ConfirmPurchaseServlet is working!");
-        processRequest(request, response);
     }
 
     /**
@@ -93,15 +92,4 @@ public class ConfirmPurchaseServlet extends HttpServlet {
         }
         
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

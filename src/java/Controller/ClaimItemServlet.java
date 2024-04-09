@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Servlet implementation class CharityItemsServlet
+ * This servlet handles requests related to fetching items available for charities.
  *
  * @author Vaishali
  */
@@ -95,15 +97,4 @@ public class ClaimItemServlet extends HttpServlet {
         
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-    
-    
 }
