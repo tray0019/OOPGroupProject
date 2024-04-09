@@ -5,7 +5,7 @@
 package Controller;
 
 import javax.servlet.http.HttpSession;
-import DataAccessLayer.ConsumerDAO;
+import DataAccessLayer.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,8 +32,8 @@ public class SubscriptionServlet extends HttpServlet {
         Integer userId = (Integer) session.getAttribute("user_id");
 
         if (userId != null) {
-            ConsumerDAO dao = new ConsumerDAO();
-            List<Subscription> subscriptions = dao.getSubscriptionsByConsumerId(userId);
+            UserDAO dao = new UserDAO();
+            List<Subscription> subscriptions = dao.getSubscriptionsByUserId(userId);
             session.setAttribute("subscriptions", subscriptions);
             
             System.out.println("Session ID in servlet: " + request.getSession().getId());
@@ -47,54 +47,45 @@ public class SubscriptionServlet extends HttpServlet {
             response.sendRedirect("Views/login.jsp"); // Or appropriate login page
         }
     }
-
-    @Override
+ @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Parse request parameters
         int consumerId = Integer.parseInt(request.getParameter("user_id"));
         int retailerId = Integer.parseInt(request.getParameter("retailer_id"));
         String action = request.getParameter("action");
 
-        // DAO initialization
-        ConsumerDAO dao = new ConsumerDAO();
+        if (retailerId <= 0) {
+            System.out.println("Invalid retailer ID received: " + retailerId);
+            response.sendRedirect("Views/errorPage.jsp");
+            return;
+        }
 
-        // Check if the retailer exists
+        UserDAO dao = new UserDAO();
         RetailersDTO retailer = dao.getRetailerById(retailerId);
-        if (retailer != null) {
-            // Prepare subscription details
-            String location = retailer.getLocation();
-            String retailerName = retailer.getRetailerName();
 
-            // Subscription/unsubscription logic
+        if (retailer != null) {
+            boolean success = false;
+
             if ("subscribe".equals(action) && !dao.isSubscribed(consumerId, retailerId)) {
-                dao.subscribeToRetailer(consumerId, retailerId, location, retailerName);
+                success = dao.subscribeToRetailer(consumerId, retailerId, retailer.getLocation(), retailer.getRetailerName());
             } else if ("unsubscribe".equals(action) && dao.isSubscribed(consumerId, retailerId)) {
-                dao.unsubscribeFromRetailer(consumerId, retailerId);
+                success = dao.unsubscribeFromRetailer(consumerId, retailerId);
             }
 
-            // Update session with the latest subscription list
-            // After updating subscriptions in doPost
-            List<Subscription> subscriptions = dao.getSubscriptionsByConsumerId(consumerId);
-            HttpSession session = request.getSession();
-            request.setAttribute("subscriptions", subscriptions); // For immediate use
-            request.getRequestDispatcher("Views/consumerSubscription.jsp").forward(request, response); // Forward, not redirect
-            session.setAttribute("subscriptions", subscriptions);
-            System.out.println("Fetched " + subscriptions.size() + " subscriptions for consumer ID " + consumerId);
-            System.out.println("Session ID in servlet: " + request.getSession().getId());
-            System.out.println("Subscriptions set in session: " + subscriptions.size());
-            // Assuming you're setting the session attribute somewhere after this
-            
-            
+            if (success) {
+                System.out.println("Action " + action + " successful for retailer ID: " + retailerId);
+            } else {
+                System.out.println("Action " + action + " failed for retailer ID: " + retailerId);
+            }
 
-            // Debug output
-            System.out.println("Consumer ID: " + consumerId);
-            System.out.println("Retailer ID: " + retailerId);
-            System.out.println("Number of subscriptions set in session: " + (subscriptions != null ? subscriptions.size() : "null"));
+            if ("subscribe".equals(action)) {
+                response.sendRedirect("ConsumerItemsServlet");
+            } else if ("unsubscribe".equals(action)) {
+                response.sendRedirect("SubscriptionServlet");
+            }
 
         } else {
             System.out.println("Retailer not found for ID: " + retailerId);
-            // Handle error appropriately
-            // e.g., set an error message in the session or request and redirect to an error page or back to the subscription page
+            response.sendRedirect("Views/errorPage.jsp");
         }
     }
 

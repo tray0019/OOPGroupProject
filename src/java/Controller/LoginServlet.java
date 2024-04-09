@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
             
         UserDAO userDAO = new UserDAO();
         CredentialsDTO user = userDAO.authenticateUser(email, password);
-
+System.out.println("Setting userId in session: " + user.getUserId());
         if (user != null) {
         System.out.println("Login successful for user: " + email); // Simple logging
         
@@ -68,12 +68,17 @@ public class LoginServlet extends HttpServlet {
 //        session.setAttribute("users", user); // Store the entire user object in the session, if you want to use it later
 //        
         // Redirect based on user type
+        HttpSession session;
             if ("retailer".equalsIgnoreCase(user.getUserType())) {
                 response.sendRedirect("InventoryManagementServlet"); // Redirect to the retailer's dashboard
             } else if ("consumer".equalsIgnoreCase(user.getUserType())) {
-               HttpSession session = request.getSession();
+                session = request.getSession();
                 session.setAttribute("user_id", user.getUserId());  // Assuming 'getUserId()' correctly retrieves the user's ID
                 response.sendRedirect("ConsumerItemsServlet");
+            }else if ("charitable_org.".equalsIgnoreCase(user.getUserType())) {
+                session = request.getSession();
+                session.setAttribute("user_id", user.getUserId());  // Assuming 'getUserId()' correctly retrieves the user's ID
+                response.sendRedirect("CharitableOrgItemsServlet");
             } else {
                 // Handle other user types or default action
                 response.sendRedirect("Views/index.jsp"); // Redirect to a default page or error page

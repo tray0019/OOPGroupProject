@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="Model.ItemDTO"%>
-<%@page import="DataAccessLayer.ConsumerDAO"%>
+<%@page import="DataAccessLayer.CharityDAO"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,7 +57,7 @@
             %>
 
 
-            <h1>Consumer - Food Waste Reduction Platform</h1>
+            <h1>Charitable Organization - Food Waste Reduction Platform</h1>
             <!-- Logout Link -->
             <div class="text-right mb-3">
                 <a href="/OOPFinalProject_FWRP/LogoutServlet" class="btn btn-danger">Logout</a>
@@ -96,7 +96,7 @@
                    <a href="/OOPFinalProject_FWRP/SubscriptionServlet">Subscription</a>
                         <%
                             List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("itemsForConsumer");
-                            ConsumerDAO dao = new ConsumerDAO();  // Initialize once outside the loop to avoid repeated instantiations
+                            CharityDAO dao = new CharityDAO();  // Initialize once outside the loop to avoid repeated instantiations
                             if (items != null && !items.isEmpty()) {
                                 for (ItemDTO item : items) {
                                     boolean isSubscribed = dao.isSubscribed((Integer) session.getAttribute("user_id"), item.getRetailerId());

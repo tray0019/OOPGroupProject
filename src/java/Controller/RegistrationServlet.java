@@ -57,7 +57,7 @@ public class RegistrationServlet extends HttpServlet {
             ((ConsumersDTO)user).setFirstName(request.getParameter("first_name"));
             ((ConsumersDTO)user).setLastName(request.getParameter("last_name"));
             break;
-        case "charitableOrg":
+        case "charitable_org.":
             user = new CharitableOrganizationDTO();
             ((CharitableOrganizationDTO)user).setCharitableOrgName(request.getParameter("charity_name"));
             break;

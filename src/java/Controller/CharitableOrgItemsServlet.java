@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import DataAccessLayer.ConsumerDAO;
+import DataAccessLayer.CharityDAO;
 import Model.ItemDTO;
 import Model.Subscription;
 import java.io.IOException;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Home
  */
-@WebServlet(name = "ConsumerItemsServlet", urlPatterns = {"/ConsumerItemsServlet"})
-public class ConsumerItemsServlet extends HttpServlet {
+@WebServlet(name = "CharitableOrgItemsServlet", urlPatterns = {"/CharitableOrgItemsServlet"})
+public class CharitableOrgItemsServlet extends HttpServlet {
 
    
 
@@ -51,19 +51,19 @@ public class ConsumerItemsServlet extends HttpServlet {
         }
       
         // Instantiate the DAO
-        ConsumerDAO consumerDAO = new ConsumerDAO();
+        CharityDAO charityDAO = new CharityDAO();
         
         // Fetch items available for consumers
-        List<ItemDTO> itemsForConsumer = consumerDAO.getAllAvailableItemsForUser();
+        List<ItemDTO> itemsForCharity= charityDAO.getAllAvailableItemsForUser();
         
         // Debugging: Print the list size to console
-        System.out.println("Number of items fetched: " + (itemsForConsumer != null ? itemsForConsumer.size() : "null"));
+        System.out.println("Number of items fetched: " + (itemsForCharity != null ? itemsForCharity.size() : "null"));
         
         // Set the fetched items as a request attribute for the JSP page
-        request.setAttribute("itemsForConsumer", itemsForConsumer);
+        request.setAttribute("itemsForConsumer", itemsForCharity);
         
         // Forward the request to the JSP page that will display the items
-        request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/charityItems.jsp").forward(request, response);
     }
     
 }

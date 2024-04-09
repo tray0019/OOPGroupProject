@@ -23,24 +23,28 @@
     <%-- Debugging to check the session attribute --%>
 Consumer ID from session: <%= session.getAttribute("user_id") %>
 
-<a href="Views/consumerItems.jsp" >Consumer Item</a>
+<a href="/OOPFinalProject_FWRP/ConsumerItemsServlet" >Consumer Item</a>
    <% List<Subscription> subscriptions = (List<Subscription>) session.getAttribute("subscriptions"); %>
    <% System.out.println("Number of subscriptions fetched from session: " + (subscriptions != null ? subscriptions.size() : "null")); %>
    <% System.out.println("Session ID in JSP: " + session.getId()); %>
 <% if (subscriptions != null && !subscriptions.isEmpty()) { %>
+
     <% for (Subscription subscription : subscriptions) { %>
         <p>Location: <%= subscription.getLocation() %></p>
         <p>Retailer Name: <%= subscription.getRetailerName() %></p>
         <p>Email: <%= subscription.getEmail() %></p>
         <p>Phone Number: <%= subscription.getPhoneNumber() %></p>
-        
-        <form method="post" action="SubscriptionServlet">
+        <% System.out.println("Retailer ID: " + subscription.getRetailerId()); %>
+        Retailer ID (for debug): <%= subscription.getRetailerId() %>
+
+        <form method="post" action="/OOPFinalProject_FWRP/SubscriptionServlet">
             <input type="hidden" name="user_id" value="<%= session.getAttribute("user_id") %>">
             <input type="hidden" name="retailer_id" value="<%= subscription.getRetailerId() %>">
             <input type="hidden" name="action" value="unsubscribe">
             <button type="submit" class="btn btn-danger btn-spacing">Unsubscribe</button>
         </form>
         <hr>
+        
     <% } %>
 <% } else { %>
     <p>No subscription details found.</p>
