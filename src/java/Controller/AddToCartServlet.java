@@ -52,9 +52,20 @@ public class AddToCartServlet extends HttpServlet {
         for (String itemIdString : selectedItemIds) {
             int itemId = Integer.parseInt(itemIdString);
             ItemDTO item = consumerDAO.getItemById(itemId); 
+            if (item != null) {
             cart.add(item);
+            System.out.println("Item added to cart: " + item.getItemName());
+        } else {
+            System.out.println("Attempted to add a null item to the cart for item ID: " + itemId);
+        }
         }
         
+         System.out.println("Cart size: " + cart.size());
+    
+
+    // Redirect to the cart view page
+    response.sendRedirect("Views/viewCart.jsp"); 
+  
         // After adding items to the cart
 System.out.println("Cart size: " + cart.size());
 for (ItemDTO item : cart) {
@@ -68,6 +79,6 @@ for (ItemDTO item : cart) {
         session.setAttribute("cart", cart);
        
         // Optionally redirect to a cart view page or back to the items list
-        response.sendRedirect("Views/viewCart.jsp"); 
+        
     }
 }

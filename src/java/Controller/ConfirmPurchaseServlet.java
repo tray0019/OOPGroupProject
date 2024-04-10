@@ -9,6 +9,8 @@ import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -80,6 +82,14 @@ public class ConfirmPurchaseServlet extends HttpServlet {
         System.out.println("inside dopost method of confirm purchase servlet");
         HttpSession session = request.getSession();
         List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
+        
+        // Filter out null items from the cart
+    if (cart != null) {
+        cart = cart.stream().filter(Objects::nonNull).collect(Collectors.toList());
+        session.setAttribute("cart", cart); // Update the cart in the session
+    }
+
+        
         if (cart != null && !cart.isEmpty()) {
             ConsumerDAO consumerDAO = new ConsumerDAO();
             consumerDAO.removeItemsFromInventory(cart);

@@ -193,7 +193,7 @@ public class UserDAO {
     
     // remove purchased item from the inventory table
     public void removeItemsFromInventory(List<ItemDTO> purchasedItems) {
-    String query = "UPDATE Inventory SET quantity = quantity - ? WHERE inventory_id = ? AND for_consumer = 1";
+    String query = "delete from Inventory WHERE inventory_id = ? AND for_consumer = 1";
     System.out.println("inside consumer DAO of remove items from inventory method");
         try {
             connection.setAutoCommit(false); // Start transaction
@@ -201,8 +201,8 @@ public class UserDAO {
             for (ItemDTO item : purchasedItems) {
                 if(item.getItemQuantity() > 0) {
                     System.out.println("inside remove items from inventory method");
-                    statement.setInt(1, item.getItemQuantity());
-                    statement.setInt(2, item.getItemId());
+                    
+                    statement.setInt(1, item.getItemId());
                     statement.executeUpdate();
                 }
             }

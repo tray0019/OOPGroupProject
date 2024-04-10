@@ -70,7 +70,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     ItemDTO item = retailersDAO.getItemByName(itemName);
 
     // Pass the retrieved item to the update item JSP page
-    request.setAttribute("item", item);
+    request.setAttribute("items", item);
     RequestDispatcher dispatcher = request.getRequestDispatcher("Views/updateItem.jsp");
     dispatcher.forward(request, response);
 }
