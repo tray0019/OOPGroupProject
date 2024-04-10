@@ -166,20 +166,20 @@ public List<ItemDTO> getRetailersAvailableItems(int userId){
 }
 
 public void updateItem(ItemDTO item) {
-    String updateQuery = "UPDATE inventory SET quantity = ?, price = ?, for_consumer = ?, for_charity = ? WHERE item_name = ? ";
-    
+    String updateQuery = "UPDATE inventory SET item_name = ?, quantity = ?, price = ? WHERE inventory_id = ?";
+
     try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
-        statement.setInt(1, item.getItemQuantity());
-        statement.setFloat(2, item.getPrice());
-        statement.setInt(3, item.isForConsumer() ? 1 : 0); // Convert boolean to integer for database storage    
-        statement.setInt(4, item.isForCharity() ? 1 : 0); // Convert boolean to integer for database storage
-        statement.setString(5, item.getItemName()); // Set the item name
-        
+        statement.setString(1, item.getItemName());
+        statement.setInt(2, item.getItemQuantity());
+        statement.setFloat(3, item.getPrice());
+        statement.setInt(4, item.getItemId());  // Assuming 'itemId' is the unique identifier
+
         statement.executeUpdate();
     } catch (SQLException e) {
         e.printStackTrace();
     }
 }
+
 
 
 public ItemDTO getItemByName(String itemName) {

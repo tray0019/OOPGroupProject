@@ -23,6 +23,13 @@ import java.util.List;
 /**
  *
  * @author Tom
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  */
 public class UserDAO {
     private final Connection connection;
