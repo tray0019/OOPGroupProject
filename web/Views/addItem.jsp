@@ -29,13 +29,13 @@
                 <label for="price">Price in CAD</label>
                 <input type="number" class="form-control" id="price" name="price" step="0.01" required>
             </div>
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label for="availability">Available For</label>
                 <select class="form-control" id="availability" name="availability" required>
                     <option value="consumers">Consumers</option>
                     <option value="charitable">Charitable Organizations</option>
                 </select>
-            </div>
+            </div>-->
             <button type="submit" class="btn btn-primary">Add Item</button>
         </form><br>
         

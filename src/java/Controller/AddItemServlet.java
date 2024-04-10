@@ -83,7 +83,7 @@ public class AddItemServlet extends HttpServlet {
     String itemName = request.getParameter("itemName");
     int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
     float price = Float.parseFloat(request.getParameter("price"));
-    String availableFor = request.getParameter("availability"); // Assuming this is the name of the field in your form
+    //String availableFor = request.getParameter("availability"); // Assuming this is the name of the field in your form
     
     // Create an ItemDTO object
     ItemDTO newItem = new ItemDTO();
@@ -92,17 +92,21 @@ public class AddItemServlet extends HttpServlet {
     newItem.setPrice(price);
     
     // Determine the values for 'for_consumer' and 'for_charity' based on the selected option
-    int forConsumer = 0;
-    int forCharity = 0;
-    if (availableFor.equals("Consumers")) {
-        forConsumer = 1;
-    } else if (availableFor.equals("charitable")) {
+    int forConsumer;
+    int forCharity;
+    if (price == 0) {
         forCharity = 1;
+        forConsumer = 0;
+    } else {
+        forConsumer = 1;
+        forCharity = 0;
     }
+
     
     // Obtain the session to get userId
     HttpSession session = request.getSession();
     int retailerId = (int) session.getAttribute("userId");
+    
     
     // Insert the item using RetailersDAO
     RetailersDAO retailersDAO = new RetailersDAO();

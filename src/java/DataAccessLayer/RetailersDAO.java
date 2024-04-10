@@ -51,7 +51,7 @@ public class RetailersDAO implements ItemDAO{
     
 public  int addItemGood(ItemDTO item, int retailerId, int forConsumer, int forCharity) {
     String insertQuery = "INSERT INTO inventory (user_id, item_name, quantity, price, for_consumer, for_charity) VALUES (?, ?, ?, ?, ?, ?)";
-    
+        
     try (PreparedStatement statement = connection.prepareStatement(insertQuery)) {
         statement.setInt(1, retailerId);
         statement.setString(2, item.getItemName());
@@ -167,12 +167,12 @@ public List<ItemDTO> getRetailersAvailableItems(int userId){
 }
 
 public void updateItem(ItemDTO item) {
-    String updateQuery = "UPDATE inventory SET quantity = ?, price = ?, for_consumer = ?, for_charity = ? WHERE item_name = ?";
+    String updateQuery = "UPDATE inventory SET quantity = ?, price = ?, for_consumer = ?, for_charity = ? WHERE item_name = ? ";
     
     try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
         statement.setInt(1, item.getItemQuantity());
         statement.setFloat(2, item.getPrice());
-        statement.setInt(3, item.isForConsumer() ? 1 : 0); // Convert boolean to integer for database storage
+        statement.setInt(3, item.isForConsumer() ? 1 : 0); // Convert boolean to integer for database storage    
         statement.setInt(4, item.isForCharity() ? 1 : 0); // Convert boolean to integer for database storage
         statement.setString(5, item.getItemName()); // Set the item name
         
@@ -181,6 +181,8 @@ public void updateItem(ItemDTO item) {
         e.printStackTrace();
     }
 }
+
+
 public ItemDTO getItemByName(String itemName) {
     ItemDTO item = null;
     String query = "SELECT * FROM inventory WHERE item_name = ?";

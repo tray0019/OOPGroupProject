@@ -58,7 +58,7 @@
     <input type="hidden" name="quantity" value="<%= item.getItemQuantity() %>">
     <input type="hidden" name="price" value="<%= item.getPrice() %>">
 <input type="hidden" name="availability" value="<%= item.isForConsumer()%>">
-    <!-- Other input fields for item quantity, price, availability, etc. -->
+<!--     Other input fields for item quantity, price, availability, etc. -->
     <input type="submit" class="btn btn-success" value="Update">
 </form>
                 <form action="DeleteItemServlet" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
