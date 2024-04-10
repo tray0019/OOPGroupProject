@@ -1,7 +1,10 @@
 package test;
 
+import java.sql.Connection;
+import DataAccessLayer.DBConnection;
 import DataAccessLayer.UserDAO;
 import Model.CredentialsDTO;
+//import com.sun.jdi.connect.spi.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +34,7 @@ public class LoginTest {
     }
 
     public static void main(String[] args) {
+        Connection con= DBConnection.getInstance().getConnection();
         Result result = JUnitCore.runClasses(LoginTest.class);
         for (Failure failure : result.getFailures()) {
             System.err.println(failure.toString());
