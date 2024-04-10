@@ -23,7 +23,36 @@ public class ConsumerDAO extends UserDAO {
     
    
 
+public List<ItemDTO> getAllAvailableItemsForUser() {
+        
+        List<ItemDTO> items = new ArrayList<>();
+        String query = "SELECT i.inventory_id, i.item_name, i.quantity, i.price, i.user_id AS retailer_id, u.retailer_name " +
+                   "FROM Inventory i " +
+                   "JOIN Users u ON i.user_id = u.user_id " +
+                   "WHERE u.Users = 'retailer' AND for_consumer = 1 and price > 0";
 
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                ItemDTO item = new ItemDTO();       
+                System.out.println("Retailer ID for item: " + item.getRetailerId());
+
+            
+                item.setItemId(resultSet.getInt("inventory_id"));
+            item.setItemName(resultSet.getString("item_name"));
+            item.setItemQuantity(resultSet.getInt("quantity"));
+            item.setPrice(resultSet.getFloat("price"));
+            item.setRetailerId(resultSet.getInt("retailer_id"));
+            item.setRetailerName(resultSet.getString("retailer_name")); // Set retailer name
+            items.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Proper exception handling
+        }
+        return items;
+    }
 
 
 
