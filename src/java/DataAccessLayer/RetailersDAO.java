@@ -35,7 +35,7 @@ public class RetailersDAO implements ItemDAO{
     public void addItem(ItemDTO item, HttpSession session) {
         String insertQuery = "INSERT INTO inventory (user_id,item_name,quantity,price)VALUES(?,?,?,?)";
         
-        int retailerId = (Integer) session.getAttribute("userId"); 
+        int retailerId = (Integer) session.getAttribute("user_id"); 
         
         try(PreparedStatement statement = connection.prepareStatement(insertQuery)){
             statement.setInt(1, retailerId);

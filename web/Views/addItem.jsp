@@ -19,7 +19,7 @@
         <form action="/OOPFinalProject_FWRP/AddItemServlet" method="post">
             <div class="form-group">
                 <label for="itemName">Item Name</label>
-                <input type="text" class="form-control" id="itemName" name="itemName" required>
+                <input type="text" class="form-control" id="item_name" name="item_name" required>
             </div>
             <div class="form-group">
                 <label for="quantity">Quantity</label>

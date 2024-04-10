@@ -79,7 +79,7 @@ public class AddToCharityCartServlet extends HttpServlet {
             throws ServletException, IOException {              
         
         // Get selected item IDs from the request                
-        String[] selectedItemIds = request.getParameterValues("itemId");
+        String[] selectedItemIds = request.getParameterValues("item_id");
         
         // Check if at least one item is selected
         if (selectedItemIds == null || selectedItemIds.length == 0) {

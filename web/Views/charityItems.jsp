@@ -106,7 +106,7 @@
                             <td><%= item.getItemQuantity()%></td>
                             <td>$<%= item.getPrice()%></td>
                             <td>
-                                <input type="checkbox" name="itemId" value="<%= item.getItemId()%>">
+                                <input type="checkbox" name="inventory_id" value="<%= item.getItemId()%>">
                             </td>
                             <td><%= item.getRetailerName()%></td>
                             <td>

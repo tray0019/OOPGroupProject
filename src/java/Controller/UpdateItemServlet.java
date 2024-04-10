@@ -63,7 +63,7 @@ public class UpdateItemServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     // Retrieve the item name from the request parameter
-    String itemName = request.getParameter("itemName");
+    String itemName = request.getParameter("item_name");
 
     // Retrieve the item from the database based on the item name
     RetailersDAO retailersDAO = new RetailersDAO();
@@ -87,7 +87,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     // Retrieve updated item details from the form
-    String itemName = request.getParameter("itemName");
+    String itemName = request.getParameter("item_name");
     int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
     float price = Float.parseFloat(request.getParameter("price"));
     //String availableFor = request.getParameter("availability");
@@ -127,7 +127,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     }
 // Obtain the session to get userId
     HttpSession session = request.getSession();
-    int retailerId = (int) session.getAttribute("userId");
+    int retailerId = (int) session.getAttribute("user_id");
     
     // Insert the item using RetailersDAO
     //RetailersDAO retailersDAO = new RetailersDAO();

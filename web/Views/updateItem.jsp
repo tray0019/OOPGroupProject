@@ -12,8 +12,8 @@
         
         <form action="/OOPFinalProject_FWRP/UpdateItemServlet" method="post">
             <div class="form-group">
-                <label for="itemName">Item Name</label>
-                <input type="text" class="form-control" id="itemName" name="itemName" value="${item.itemName}" readonly>
+                <label for="item_name">Item Name</label>
+                <input type="text" class="form-control" id="item_name" name="item_name" value="${item.itemName}" readonly>
             </div>
             <div class="form-group">
                 <label for="quantity">Quantity</label>
