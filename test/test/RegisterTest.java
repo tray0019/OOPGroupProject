@@ -27,7 +27,7 @@ public class RegisterTest {
 
     @Test
     public void registerTest() {
-        String email = "mahsa@gmail.com";
+        String email = "mahsa3@gmail.com";
         String password = "123456";
         String address = "address";
         String phone = "phone";
