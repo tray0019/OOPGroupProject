@@ -80,7 +80,7 @@ public class AddItemServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
  // Retrieve item data from the form
-    String itemName = request.getParameter("itemName");
+    String itemName = request.getParameter("item_name"); //THIS!!
     int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
     float price = Float.parseFloat(request.getParameter("price"));
     //String availableFor = request.getParameter("availability"); // Assuming this is the name of the field in your form
@@ -105,7 +105,7 @@ public class AddItemServlet extends HttpServlet {
     
     // Obtain the session to get userId
     HttpSession session = request.getSession();
-    int retailerId = (int) session.getAttribute("userId");
+    int retailerId = (int) session.getAttribute("user_id"); //THIS
     
     
     // Insert the item using RetailersDAO

@@ -79,7 +79,8 @@ public class DeleteItemServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         // Get the item ID from the request
-        String itemIdStr = request.getParameter("itemId");
+        String itemIdStr = request.getParameter("inventory_id");// its String
+        
         
             try {
 
@@ -89,7 +90,7 @@ public class DeleteItemServlet extends HttpServlet {
                 
                 // Retrieve the updated list of items from the database
         HttpSession session = request.getSession();
-        int retailerId = (int) session.getAttribute("userId");
+        int retailerId = (int) session.getAttribute("user_id");
         List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId);
 
         // Set the updated list of items as an attribute in the request
