@@ -6,7 +6,6 @@ public class ItemDTO {
     private String itemName;
     private int itemQuantity; //This should be int
     
-    //------------added by Vaishali to display items on index page
     private boolean forConsumer;
     private boolean forCharity;
     private String retailerName;
@@ -72,7 +71,7 @@ public class ItemDTO {
         this.itemQuantity = itemQuantity;
     }
     
-    //-------------------------added by Vaishali
+    //
     /**
      * @return if the item is for consumers at a reduced price
      */
