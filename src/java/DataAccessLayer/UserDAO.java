@@ -138,7 +138,7 @@ public class UserDAO {
         String query = "SELECT i.inventory_id, i.item_name, i.quantity, i.price, i.user_id AS retailer_id, u.retailer_name " +
                    "FROM Inventory i " +
                    "JOIN Users u ON i.user_id = u.user_id " +
-                   "WHERE u.Users = 'retailer' AND for_consumer = 1 and quantity > 0";
+                   "WHERE u.Users = 'retailer'";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
