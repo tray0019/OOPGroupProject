@@ -42,14 +42,14 @@
         <h1>Welcome to the Food Waste Reduction Platform</h1>
         <!-- Logout Link -->
         <div class="text-right mb-3">
-            <a href="/OOPFinalProject_FWRP/LogoutServlet" class="btn btn-danger">Logout</a>
+            <a href="LogoutServlet" class="btn btn-danger">Logout</a>
         </div>
         <h3>Review Your Cart</h3>
         <p>Confirm the items you wish to purchase from your cart.</p>
     </div>
 
     <div class="container mt-3">
-        <form action="../ClaimItemServlet" method="post">
+        <form action="/OOPFinalProject_FWRP/ClaimItemServlet" method="post">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>

@@ -4,13 +4,13 @@
  */
 package Controller;
 
-import DataAccessLayer.ConsumerDAO;
+import DataAccessLayer.RetailersDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,13 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ConfirmPurchaseServlet
- * This servlet handles confirming purchases made by users.
  *
- * @author Home
+ * @author natan
  */
-@WebServlet(name = "ConfirmPurchaseServlet", urlPatterns = {"/ConfirmPurchaseServlet"})
-public class ConfirmPurchaseServlet extends HttpServlet {
+@WebServlet(name = "DeleteItemServlet", urlPatterns = {"/DeleteItemServlet"})
+public class DeleteItemServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +42,10 @@ public class ConfirmPurchaseServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConfirmPurchaseServlet</title>");            
+            out.println("<title>Servlet DeleteItemServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConfirmPurchaseServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteItemServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,6 +63,7 @@ public class ConfirmPurchaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -78,27 +77,46 @@ public class ConfirmPurchaseServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("inside dopost method of confirm purchase servlet");
-        HttpSession session = request.getSession();
-        List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
+        //processRequest(request, response);
+        // Get the item ID from the request
+        String itemIdStr = request.getParameter("inventory_id");// its String
         
-        // Filter out null items from the cart
-    if (cart != null) {
-        cart = cart.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        session.setAttribute("cart", cart); // Update the cart in the session
+        
+            try {
+
+                // Delete the item from the database
+                RetailersDAO retailersDAO = new RetailersDAO();
+                retailersDAO.deleteItemGood(itemIdStr);
+                
+                // Retrieve the updated list of items from the database
+        HttpSession session = request.getSession();
+        int retailerId = (int) session.getAttribute("user_id");
+        List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId);
+
+        // Set the updated list of items as an attribute in the request
+        request.setAttribute("items", itemList);
+
+        // Redirect to the retailer inventory JSP page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Views/retailerInventory.jsp");
+        dispatcher.forward(request, response);
+
+                // Redirect to the inventory page
+                //response.sendRedirect("Views/retailerInventory.jsp");
+            } catch (NumberFormatException e) {
+                // Handle invalid item ID (not a number)
+                response.sendRedirect("error.jsp");
+            }
+
     }
 
-        
-        if (cart != null && !cart.isEmpty()) {
-            ConsumerDAO consumerDAO = new ConsumerDAO();
-            consumerDAO.removeItemsFromInventory(cart);
-            session.removeAttribute("cart"); // Clear the cart after purchase
-            request.setAttribute("purchaseSuccess", "Your purchase has been confirmed!");
-            response.sendRedirect("/OOPFinalProject_FWRP/ConsumerItemsServlet"); // Change from forwarding to redirecting
-        } else {
-            request.setAttribute("error", "Your cart is empty.");
-            request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
-        }
-        
-    }
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

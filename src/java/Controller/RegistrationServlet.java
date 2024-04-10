@@ -41,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
         // Validate email format
         if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             request.setAttribute("registrationError", "Invalid email format.");
-            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/registration.jsp").forward(request, response);
             return;
         }
 

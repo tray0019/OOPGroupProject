@@ -74,6 +74,8 @@ System.out.println("Setting userId in session: " + user.getUserId());
         // Redirect based on user type
         HttpSession session;
             if ("retailer".equalsIgnoreCase(user.getUserType())) {
+                session = request.getSession();
+                session.setAttribute("user_id", user.getUserId());
                 response.sendRedirect("/OOPFinalProject_FWRP/InventoryManagementServlet"); // Redirect to the retailer's dashboard
             } else if ("consumer".equalsIgnoreCase(user.getUserType())) {
                 session = request.getSession();

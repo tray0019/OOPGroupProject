@@ -4,28 +4,27 @@
  */
 package Controller;
 
-import DataAccessLayer.ConsumerDAO;
+import DataAccessLayer.RetailersDAO;
 import Model.ItemDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+
 
 /**
- * Servlet implementation class ConfirmPurchaseServlet
- * This servlet handles confirming purchases made by users.
  *
- * @author Home
+ * @author natan
  */
-@WebServlet(name = "ConfirmPurchaseServlet", urlPatterns = {"/ConfirmPurchaseServlet"})
-public class ConfirmPurchaseServlet extends HttpServlet {
+@WebServlet(name = "AddItemServlet", urlPatterns = {"/AddItemServlet"})
+public class AddItemServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +43,10 @@ public class ConfirmPurchaseServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConfirmPurchaseServlet</title>");            
+            out.println("<title>Servlet AddItemServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConfirmPurchaseServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddItemServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,6 +64,7 @@ public class ConfirmPurchaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -78,27 +78,60 @@ public class ConfirmPurchaseServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("inside dopost method of confirm purchase servlet");
-        HttpSession session = request.getSession();
-        List<ItemDTO> cart = (List<ItemDTO>) session.getAttribute("cart");
-        
-        // Filter out null items from the cart
-    if (cart != null) {
-        cart = cart.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        session.setAttribute("cart", cart); // Update the cart in the session
+        //processRequest(request, response);
+ // Retrieve item data from the form
+    String itemName = request.getParameter("item_name"); //THIS!!
+    int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
+    float price = Float.parseFloat(request.getParameter("price"));
+    //String availableFor = request.getParameter("availability"); // Assuming this is the name of the field in your form
+    
+    // Create an ItemDTO object
+    ItemDTO newItem = new ItemDTO();
+    newItem.setItemName(itemName);
+    newItem.setItemQuantity(itemQuantity);
+    newItem.setPrice(price);
+    
+    // Determine the values for 'for_consumer' and 'for_charity' based on the selected option
+    int forConsumer;
+    int forCharity;
+    if (price == 0) {
+        forCharity = 1;
+        forConsumer = 0;
+    } else {
+        forConsumer = 1;
+        forCharity = 0;
     }
 
-        
-        if (cart != null && !cart.isEmpty()) {
-            ConsumerDAO consumerDAO = new ConsumerDAO();
-            consumerDAO.removeItemsFromInventory(cart);
-            session.removeAttribute("cart"); // Clear the cart after purchase
-            request.setAttribute("purchaseSuccess", "Your purchase has been confirmed!");
-            response.sendRedirect("/OOPFinalProject_FWRP/ConsumerItemsServlet"); // Change from forwarding to redirecting
-        } else {
-            request.setAttribute("error", "Your cart is empty.");
-            request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);
-        }
-        
-    }
+    
+    // Obtain the session to get userId
+    HttpSession session = request.getSession();
+    int retailerId = (int) session.getAttribute("user_id"); //THIS
+    
+    
+    // Insert the item using RetailersDAO
+    RetailersDAO retailersDAO = new RetailersDAO();
+    retailersDAO.addItemGood(newItem, retailerId, forConsumer, forCharity);
+    
+        // After adding the item, retrieve the updated list of items from the database
+    List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId); 
+
+    // Set the updated list of items as an attribute in the request or session
+    request.setAttribute("items", itemList); 
+
+    // Redirect to the retailer inventory JSP page
+    RequestDispatcher dispatcher = request.getRequestDispatcher("Views/retailerInventory.jsp");
+    dispatcher.forward(request, response);
+
+}
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

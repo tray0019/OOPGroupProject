@@ -34,7 +34,8 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <a href="addItem.jsp" class="btn btn-primary">Add Item</a><br>
+            <a href="Views/addItem.jsp" class="btn btn-primary">Add Item</a>
+
             <tbody>
                 <%
                     // You would retrieve the list of items from a method that fetches data from the database.
@@ -49,15 +50,22 @@
                     <td>$<%= item.getPrice() %></td>
                     <td><%= item.isForConsumer() ? "Consumers" : "Charitable Organizations" %></td> <!-- Assuming you have a method isForConsumer() -->
                     
-                    <td>
-                <!-- Update and Delete buttons for each item -->
-                <a href="updateItem.jsp?itemId=<%= item.getItemId() %>" class="btn btn-success">Update</a>
-                <form action="deleteItemServlet" method="POST" style="display:inline;">
-                    <input type="hidden" name="itemId" value="<%= item.getItemId() %>" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    
-                </form>
-            </td>
+<td>
+    <!-- Update button -->
+    <form action="UpdateItemServlet" method="get" style="display:inline;">
+        <input type="hidden" name="item_name" value="<%= item.getItemName() %>">
+        <input type="hidden" name="quantity" value="<%= item.getItemQuantity() %>">
+        <input type="hidden" name="price" value="<%= item.getPrice() %>">
+        <input type="hidden" name="availability" value="<%= item.isForConsumer()%>">
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+    
+    <!-- Delete button -->
+    <form action="DeleteItemServlet" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="inventory_id" value="<%= item.getItemName() %>" />
+        <button type="submit" class="btn btn-danger">Delete</button>    
+    </form>
+</td>
                 </tr>
                 <%
                         }
