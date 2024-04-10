@@ -51,7 +51,7 @@ public class RetailersDAO implements ItemDAO{
     
 public  int addItemGood(ItemDTO item, int retailerId, int forConsumer, int forCharity) {
     String insertQuery = "INSERT INTO inventory (user_id, item_name, quantity, price, for_consumer, for_charity) VALUES (?, ?, ?, ?, ?, ?)";
-    
+        
     try (PreparedStatement statement = connection.prepareStatement(insertQuery)) {
         statement.setInt(1, retailerId);
         statement.setString(2, item.getItemName());
@@ -79,6 +79,7 @@ public  int addItemGood(ItemDTO item, int retailerId, int forConsumer, int forCh
     
     @Override
     public void selectItem() {
+       
     
     }
     
@@ -163,5 +164,68 @@ public List<ItemDTO> getRetailersAvailableItems(int userId){
     }
     return items;
 }
+
+public void updateItem(ItemDTO item) {
+    String updateQuery = "UPDATE inventory SET quantity = ?, price = ?, for_consumer = ?, for_charity = ? WHERE item_name = ? ";
+    
+    try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+        statement.setInt(1, item.getItemQuantity());
+        statement.setFloat(2, item.getPrice());
+        statement.setInt(3, item.isForConsumer() ? 1 : 0); // Convert boolean to integer for database storage    
+        statement.setInt(4, item.isForCharity() ? 1 : 0); // Convert boolean to integer for database storage
+        statement.setString(5, item.getItemName()); // Set the item name
+        
+        statement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+public ItemDTO getItemByName(String itemName) {
+    ItemDTO item = null;
+    String query = "SELECT * FROM inventory WHERE item_name = ?";
+    
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, itemName);
+        ResultSet resultSet = statement.executeQuery();
+        
+        if (resultSet.next()) {
+            // If the item is found, create an ItemDTO object and populate its fields
+            item = new ItemDTO();
+            item.setItemName(resultSet.getString("item_name"));
+            item.setItemQuantity(resultSet.getInt("quantity"));
+            item.setPrice(resultSet.getFloat("price"));
+            item.setForConsumer(resultSet.getInt("for_consumer") == 1); // Convert integer to boolean
+            item.setForCharity(resultSet.getInt("for_charity") == 1); // Convert integer to boolean
+            // Add more fields as necessary
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    return item; // Return the retrieved item, or null if not found
+}
+
+
+
+public int getInventoryIdByName(String itemName) {
+    String query = "SELECT inventory_id FROM inventory WHERE item_name = ?";
+    
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, itemName);
+        ResultSet resultSet = statement.executeQuery();
+        
+        if (resultSet.next()) {
+            return resultSet.getInt("inventory_id");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    // Return -1 if the item with the given name is not found
+    return -1;
+}
+
 //------------------------------------------------------------------------------------   
 }

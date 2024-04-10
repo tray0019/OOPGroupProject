@@ -50,16 +50,22 @@
                     <td>$<%= item.getPrice() %></td>
                     <td><%= item.isForConsumer() ? "Consumers" : "Charitable Organizations" %></td> <!-- Assuming you have a method isForConsumer() -->
                     
-                    <td>
-                <!-- Update and Delete buttons for each item -->
-<!--                <a href="updateItem.jsp?" class="btn btn-success">Update</a>-->
-                
-                <form action="/OOPFinalProject_FWRP/DeleteItemServlet" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                <input type="hidden" name="itemId" value="<%= item.getItemName() %>" />
-                <button type="submit" class="btn btn-danger">Delete</button>    
-                </form>
-
-            </td>
+<td>
+    <!-- Update button -->
+    <form action="UpdateItemServlet" method="get" style="display:inline;">
+        <input type="hidden" name="itemName" value="<%= item.getItemName() %>">
+        <input type="hidden" name="quantity" value="<%= item.getItemQuantity() %>">
+        <input type="hidden" name="price" value="<%= item.getPrice() %>">
+        <input type="hidden" name="availability" value="<%= item.isForConsumer()%>">
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+    
+    <!-- Delete button -->
+    <form action="DeleteItemServlet" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="itemId" value="<%= item.getItemName() %>" />
+        <button type="submit" class="btn btn-danger">Delete</button>    
+    </form>
+</td>
                 </tr>
                 <%
                         }

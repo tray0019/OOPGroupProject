@@ -30,7 +30,7 @@ public class AddToCartServlet extends HttpServlet {
             throws ServletException, IOException {              
         
         // Get selected item IDs from the request                
-        String[] selectedItemIds = request.getParameterValues("itemId");
+        String[] selectedItemIds = request.getParameterValues("inventory_id");//THIS ONE!!
         
         // Check if at least one item is selected
         if (selectedItemIds == null || selectedItemIds.length == 0) {
