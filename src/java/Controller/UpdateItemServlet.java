@@ -92,30 +92,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     float price = Float.parseFloat(request.getParameter("price"));
     //String availableFor = request.getParameter("availability");
 
-    // Determine the values for 'for_consumer' and 'for_charity' based on the selected option
-//    int forConsumer = 0;
-//    int forCharity = 0;
-//    if (availableFor.equals("Consumers")) {
-//        forConsumer = 1;
-//    } else if (availableFor.equals("charitable")) {
-//        forCharity = 1;
-//    }
-
     // Create a new ItemDTO object with the updated details
     ItemDTO updatedItem = new ItemDTO();
     updatedItem.setItemName(itemName);
     updatedItem.setItemQuantity(itemQuantity);
     updatedItem.setPrice(price);
-//    updatedItem.setForConsumer(forConsumer == 1);
-//    updatedItem.setForCharity(forCharity == 1);
 
-    // Update the item in the database
-    RetailersDAO retailersDAO = new RetailersDAO();
-    retailersDAO.updateItem(updatedItem);
-//
-//    // Redirect the user back to the inventory page
-//    response.sendRedirect("Views/addItem.jsp");
-    // Determine the values for 'for_consumer' and 'for_charity' based on the selected option
+   // Determine the values for 'for_consumer' and 'for_charity' based on the selected option
     int forConsumer;
     int forCharity;
     if (price == 0) {
@@ -128,17 +111,17 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
 // Obtain the session to get userId
     HttpSession session = request.getSession();
     int retailerId = (int) session.getAttribute("user_id");
-    
-    // Insert the item using RetailersDAO
+      // Update the item in the database
+    RetailersDAO retailersDAO = new RetailersDAO();
+ 
     //RetailersDAO retailersDAO = new RetailersDAO();
-    retailersDAO.addItemGood(updatedItem, retailerId, forConsumer, forCharity);
-    
+    retailersDAO.updateItemNew(itemName, itemQuantity, price, forConsumer, forCharity);
         // After adding the item, retrieve the updated list of items from the database
-    List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId); 
-
+    List<ItemDTO> itemList = retailersDAO.getRetailersAvailableItems(retailerId);
+ 
     // Set the updated list of items as an attribute in the request or session
-    request.setAttribute("items", itemList); 
-
+    request.setAttribute("items", itemList);
+ 
     // Redirect to the retailer inventory JSP page
     RequestDispatcher dispatcher = request.getRequestDispatcher("Views/retailerInventory.jsp");
     dispatcher.forward(request, response);

@@ -180,6 +180,25 @@ public void updateItem(ItemDTO item) {
     }
 }
 
+public void updateItemNew(String itemName, int itemQuantity, float price, int forConsumer, int forCharity) {
+    String updateQuery = "UPDATE inventory SET quantity = ?, price = ?, for_consumer = ?, for_charity = ? WHERE item_name = ?";
+    try (PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+        statement.setInt(1, itemQuantity);
+        statement.setFloat(2, price);
+        statement.setInt(3, forConsumer);
+        statement.setInt(4, forCharity);
+        statement.setString(5, itemName);
+        statement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+ 
+    // If the item is being updated from charitable to consumer, delete the previous charitable entry
+    if (forConsumer == 1) {
+        deleteCharitableItem(itemName);
+    }
+}
+
 
 
 public ItemDTO getItemByName(String itemName) {
@@ -226,6 +245,14 @@ public int getInventoryIdByName(String itemName) {
     // Return -1 if the item with the given name is not found
     return -1;
 }
-
+private void deleteCharitableItem(String itemName) {
+    String deleteQuery = "DELETE FROM inventory WHERE item_name = ? AND for_charity = 1";
+    try (PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+        statement.setString(1, itemName);
+        statement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
 //------------------------------------------------------------------------------------   
+}
 }
