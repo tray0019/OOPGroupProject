@@ -70,15 +70,15 @@ System.out.println("Setting userId in session: " + user.getUserId());
         // Redirect based on user type
         HttpSession session;
             if ("retailer".equalsIgnoreCase(user.getUserType())) {
-                response.sendRedirect("InventoryManagementServlet"); // Redirect to the retailer's dashboard
+                response.sendRedirect("/OOPFinalProject_FWRP/InventoryManagementServlet"); // Redirect to the retailer's dashboard
             } else if ("consumer".equalsIgnoreCase(user.getUserType())) {
                 session = request.getSession();
                 session.setAttribute("user_id", user.getUserId());  // Assuming 'getUserId()' correctly retrieves the user's ID
-                response.sendRedirect("ConsumerItemsServlet");
+                response.sendRedirect("/OOPFinalProject_FWRP/ConsumerItemsServlet");
             }else if ("charitable_org.".equalsIgnoreCase(user.getUserType())) {
                 session = request.getSession();
                 session.setAttribute("user_id", user.getUserId());  // Assuming 'getUserId()' correctly retrieves the user's ID
-                response.sendRedirect("CharitableOrgItemsServlet");
+                response.sendRedirect("/OOPFinalProject_FWRP/CharitableOrgItemsServlet");
             } else {
                 // Handle other user types or default action
                 response.sendRedirect("Views/index.jsp"); // Redirect to a default page or error page

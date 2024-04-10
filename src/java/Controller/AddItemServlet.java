@@ -102,7 +102,7 @@ public class AddItemServlet extends HttpServlet {
     
     // Obtain the session to get userId
     HttpSession session = request.getSession();
-    int retailerId = (int) session.getAttribute("userId");
+    int retailerId = (int) session.getAttribute("user_id");
     
     // Insert the item using RetailersDAO
     RetailersDAO retailersDAO = new RetailersDAO();

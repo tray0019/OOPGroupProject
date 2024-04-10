@@ -78,9 +78,9 @@ public class SubscriptionServlet extends HttpServlet {
             }
 
             if ("subscribe".equals(action)) {
-                response.sendRedirect("ConsumerItemsServlet");
+                response.sendRedirect("/OOPFinalProject_FWRP/ConsumerItemsServlet");
             } else if ("unsubscribe".equals(action)) {
-                response.sendRedirect("SubscriptionServlet");
+                response.sendRedirect("/OOPFinalProject_FWRP/SubscriptionServlet");
             }
 
         } else {

@@ -49,7 +49,7 @@
     </div>
 
     <div class="container mt-3">
-        <form action="../ClaimItemServlet" method="post">
+        <form action="/OOPFinalProject_FWRP/ClaimItemServlet" method="post">
             <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>

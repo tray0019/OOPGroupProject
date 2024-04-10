@@ -87,7 +87,7 @@ public class ClaimItemServlet extends HttpServlet {
             charityDAO.removeItemsFromInventory(cart);
             session.removeAttribute("cart"); // Clear the cart after purchase
             request.setAttribute("claimSuccess", "Your claim has been confirmed!");
-            response.sendRedirect("CharityItemsServlet"); // Change from forwarding to redirecting
+            response.sendRedirect("/OOPFinalProject_FWRP/CharityItemsServlet"); // Change from forwarding to redirecting
         } else {
             request.setAttribute("error", "Your cart is empty.");
             request.getRequestDispatcher("Views/charityItems.jsp").forward(request, response);

@@ -85,7 +85,7 @@ public class AddToCharityCartServlet extends HttpServlet {
         if (selectedItemIds == null || selectedItemIds.length == 0) {
             // Redirect back to consumerItems.jsp with an error message or notification
             request.setAttribute("errorMessage", "Please select at least one item to add to the cart.");
-            request.getRequestDispatcher("/charityItems.jsp").forward(request, response);
+            request.getRequestDispatcher("Views/charityItems.jsp").forward(request, response);
             return;
         }
         

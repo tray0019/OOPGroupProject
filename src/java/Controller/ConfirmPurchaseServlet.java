@@ -85,7 +85,7 @@ public class ConfirmPurchaseServlet extends HttpServlet {
             consumerDAO.removeItemsFromInventory(cart);
             session.removeAttribute("cart"); // Clear the cart after purchase
             request.setAttribute("purchaseSuccess", "Your purchase has been confirmed!");
-            response.sendRedirect("ConsumerItemsServlet"); // Change from forwarding to redirecting
+            response.sendRedirect("/OOPFinalProject_FWRP/ConsumerItemsServlet"); // Change from forwarding to redirecting
         } else {
             request.setAttribute("error", "Your cart is empty.");
             request.getRequestDispatcher("Views/consumerItems.jsp").forward(request, response);

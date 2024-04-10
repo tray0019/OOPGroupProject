@@ -39,6 +39,11 @@
         <url-pattern>/AddToCartServlet</url-pattern>
     </servlet-mapping>
     
+     <servlet-mapping>
+        <servlet-name>AddItemServlet</servlet-name>
+        <url-pattern>/AddItemServlet</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>ConfirmPurchaseServlet</servlet-name>
         <servlet-class>Controller.ConfirmPurchaseServlet</servlet-class>
