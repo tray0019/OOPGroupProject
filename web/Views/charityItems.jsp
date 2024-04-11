@@ -91,8 +91,7 @@
                     </thead>
                     <tbody>
 
-                        <%-- Debugging to check the session attribute --%>
-                        Consumer ID from session: <%= session.getAttribute("user_id")%>
+                        
                    <a href="/OOPFinalProject_FWRP/SubscriptionServlet">Subscription</a>
                         <%
                             List<ItemDTO> items = (List<ItemDTO>) request.getAttribute("itemsForConsumer");

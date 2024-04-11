@@ -7,6 +7,18 @@ public class ItemDTO {
     private String date;
     private float price;
 
+      public ItemDTO() {
+        // No-argument constructor
+    }
+    
+     public ItemDTO(String itemName, int itemQuantity, float price) {
+        this.itemName = itemName;
+        this.itemQuantity = itemQuantity;
+        this.price = price;
+        // Initialize other fields
+    }
+
+    
     public int getItemId() {
         return itemId;
     }

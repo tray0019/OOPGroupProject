@@ -11,11 +11,21 @@ public class ItemDTO {
     private boolean forCharity;
     private String retailerName;
     
+   
     //-----------------------------------------------------------
 
     private String date;
 
     private float price;
+    
+      public ItemDTO() {
+        // No-argument constructor
+    }
+      public ItemDTO(String itemName, int itemQuantity, float price) {
+        this.itemName = itemName;
+        this.itemQuantity = itemQuantity;
+        this.price = price;
+    }
     
     /**
      * Rustom: Added for inventory

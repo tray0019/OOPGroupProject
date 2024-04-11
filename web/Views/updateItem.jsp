@@ -11,6 +11,8 @@
         <h1>Update this Item</h1>
         
         <form action="/OOPFinalProject_FWRP/UpdateItemServlet" method="post">
+            <input type="hidden" name="inventory_id" value="${item.itemId}">
+
             <div class="form-group">
                 <label for="item_name">Item Name</label>
                 <input type="text" class="form-control" id="item_name" name="item_name" value="${item.itemName}" readonly>

@@ -20,8 +20,7 @@
 </head>
 <body>
     <h1>Subscription Details</h1>
-    <%-- Debugging to check the session attribute --%>
-Consumer ID from session: <%= session.getAttribute("user_id") %>
+
 
 <a href="/OOPFinalProject_FWRP/ConsumerItemsServlet" >Consumer Item</a>
    <% List<Subscription> subscriptions = (List<Subscription>) session.getAttribute("subscriptions"); %>
